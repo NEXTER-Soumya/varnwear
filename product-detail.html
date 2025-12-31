@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .product-detail {
+            margin-top: 100px;
+            padding: 40px 0;
+        }
+        
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .product-image-section {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .product-image-large {
+            background: #f0f0f0;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .product-image-large img,
+        .product-image-large video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .thumbnail {
+            height: 80px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border 0.3s;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .thumbnail.active {
+            border-color: #d4af37;
+        }
+        
+        .thumbnail:hover {
+            border-color: #000;
+        }
+        
+        .thumbnail img,
+        .thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details h1 {
+            font-size: 2.5rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .size-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .size-selector h3 {
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .size-option {
+            border: 2px solid #ccc;
+            background: #fff;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .size-option:hover,
+        .size-option.selected {
+            border-color: #d4af37;
+            background: #d4af37;
+            color: #000;
+        }
+        
+        .quantity-selector {
+            margin-bottom: 2rem;
+        }
+        
+        .quantity-selector h3 {
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .quantity-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background: #d4af37;
+            color: #000;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 2px solid #ccc;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        
+        .add-to-cart-large {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .add-to-cart-large:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .back-to-shop {
+            background: #fff;
+            color: #000;
+            border: 2px solid #000;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+        
+        .back-to-shop:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .reviews-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+        
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .reviews-header h2 {
+            font-size: 2rem;
+            color: #000;
+        }
+        
+        .average-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .rating-stars {
+            color: #d4af37;
+            font-size: 1.5rem;
+        }
+        
+        .rating-number {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .add-review {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .add-review h3 {
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .rating-input {
+            margin-bottom: 1rem;
+        }
+        
+        .rating-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000;
+            font-weight: 500;
+        }
+        
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #d4af37;
+        }
+        
+        .review-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .review-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .submit-review {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-review:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .review-item {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reviewer-name {
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .review-stars {
+            color: #d4af37;
+        }
+        
+        .review-date {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .product-image-large {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink" style="display: none;">Profile</a>
+                        <a href="login.html" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Product Detail -->
+    <section class="product-detail">
+        <div class="product-detail-container">
+            <div class="product-image-section">
+                <a href="products.html" class="back-to-shop">← Back to Shop</a>
+                <div class="product-image-large" id="productImage">
+                    <span id="productImageText">Premium Product</span>
+                </div>
+                <div class="product-thumbnails">
+                    <div class="thumbnail active" onclick="changeImage(0)">Image 1</div>
+                    <div class="thumbnail" onclick="changeImage(1)">Image 2</div>
+                    <div class="thumbnail" onclick="changeImage(2)">Image 3</div>
+                    <div class="thumbnail" onclick="changeImage(3)">Image 4</div>
+                    <div class="thumbnail" onclick="changeImage(4)">Image 5</div>
+                    <div class="thumbnail" onclick="changeImage(5)">Video</div>
+                </div>
+            </div>
+            
+            <div class="product-details">
+                <h1 id="productName">Classic Blazer</h1>
+                <div class="product-price" id="productPrice">₹1999</div>
+                <div class="product-description" id="productDescription">
+                    Elevate your wardrobe with this timeless classic blazer. Crafted from premium materials with attention to detail, this piece combines sophistication with comfort. Perfect for both professional and casual settings.
+                </div>
+                
+                <div class="size-selector">
+                    <h3>Size</h3>
+                    <div class="size-options">
+                        <div class="size-option" data-size="XS" data-price="2499">XS</div>
+                        <div class="size-option" data-size="S" data-price="2699">S</div>
+                        <div class="size-option selected" data-size="M" data-price="2899">M</div>
+                        <div class="size-option" data-size="L" data-price="3099">L</div>
+                        <div class="size-option" data-size="XL" data-price="3299">XL</div>
+                    </div>
+                </div>
+                
+                <div class="quantity-selector">
+                    <h3>Quantity</h3>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" id="decreaseQty">-</button>
+                        <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="10">
+                        <button class="quantity-btn" id="increaseQty">+</button>
+                    </div>
+                </div>
+                
+                <button class="add-to-cart-large" id="addToCartBtn">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="reviews-header">
+            <h2>Customer Reviews</h2>
+            <div class="average-rating">
+                <div class="rating-stars" id="avgStars">★★★★★</div>
+                <span class="rating-number" id="avgRating">(0.0)</span>
+            </div>
+        </div>
+        
+        <div class="add-review">
+            <h3>Write a Review</h3>
+            <form class="review-form" id="reviewForm">
+                <div class="rating-input">
+                    <label>Your Rating:</label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                </div>
+                <textarea id="reviewText" placeholder="Write your review here..." required></textarea>
+                <button type="submit" class="submit-review">Submit Review</button>
+            </form>
+        </div>
+        
+        <div class="reviews-list" id="reviewsList"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Product data with size-based pricing
+        const products = {
+            '1': { name: 'Classic Blazer', basePrice: 2899, image: 'Premium Jacket', description: 'Elevate your wardrobe with this timeless classic blazer. Crafted from premium materials with attention to detail, this piece combines sophistication with comfort.' },
+            '2': { name: 'Evening Dress', basePrice: 1999, image: 'Elegant Dress', description: 'Make a statement with this elegant evening dress. Perfect for special occasions, featuring luxurious fabric and a flattering silhouette.' },
+            '3': { name: 'Silk Shirt', basePrice: 1499, image: 'Luxury Shirt', description: 'Experience luxury with this premium silk shirt. Soft, breathable, and stylish - perfect for both business and casual wear.' },
+            '4': { name: 'Tailored Trousers', basePrice: 1799, image: 'Designer Pants', description: 'These tailored trousers offer the perfect blend of comfort and style. Expertly crafted for a flattering fit.' }
+        };
+
+        // Size price multipliers
+        const sizePrices = {
+            'XS': -400,
+            'S': -200,
+            'M': 0,
+            'L': 200,
+            'XL': 400
+        };
+
+        // Image gallery functionality
+        function changeImage(index) {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbnails[index].classList.add('active');
+            
+            const imageContainer = document.getElementById('productImage');
+            const imageText = document.getElementById('productImageText');
+            
+            if (index === 5) {
+                imageText.textContent = 'Product Video';
+            } else {
+                imageText.textContent = `Product Image ${index + 1}`;
+            }
+        }
+
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || '1';
+
+        // Load product details
+        function loadProductDetails() {
+            const product = products[productId];
+            if (product) {
+                document.getElementById('productName').textContent = product.name;
+                document.getElementById('productImageText').textContent = product.image;
+                document.getElementById('productDescription').textContent = product.description;
+                
+                // Set size prices based on product base price
+                document.querySelectorAll('.size-option').forEach(option => {
+                    const size = option.dataset.size;
+                    const price = product.basePrice + sizePrices[size];
+                    option.dataset.price = price;
+                });
+                
+                // Set initial price for selected size
+                updatePrice();
+            }
+        }
+
+        // Update price based on selected size
+        function updatePrice() {
+            const selectedSize = document.querySelector('.size-option.selected');
+            if (selectedSize) {
+                const price = selectedSize.dataset.price;
+                document.getElementById('productPrice').textContent = '₹' + price;
+            }
+        }
+
+        // Size selection
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                updatePrice();
+            });
+        });
+
+        // Quantity controls
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decreaseQty');
+        const increaseBtn = document.getElementById('increaseQty');
+
+        decreaseBtn.addEventListener('click', () => {
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            const currentValue = parseInt(quantityInput.value);
+            if (currentValue < 10) {
+                quantityInput.value = currentValue + 1;
+            }
+        });
+
+        // Add to cart functionality
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                alert('Please log in to add items to cart!');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const product = products[productId];
+            const selectedSizeOption = document.querySelector('.size-option.selected');
+            const selectedSize = selectedSizeOption.dataset.size;
+            const selectedPrice = '₹' + selectedSizeOption.dataset.price;
+            const quantity = parseInt(quantityInput.value);
+
+            if (product) {
+                // Add multiple items based on quantity
+                for (let i = 0; i < quantity; i++) {
+                    addToCart({
+                        id: productId,
+                        name: product.name,
+                        price: selectedPrice,
+                        size: selectedSize
+                    });
+                }
+                
+                showAddedToCartMessage(`${product.name} (${quantity}x) added to cart!`);
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductDetails();
+            updateCartDisplay();
+            loadReviews();
+            initStarRating();
+        });
+
+        // Reviews functionality
+        let selectedRating = 0;
+
+        function initStarRating() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    // Check if user is logged in
+                    const isLoggedIn = localStorage.getItem('isLoggedIn');
+                    if (!isLoggedIn) {
+                        alert('Please log in to rate products!');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    selectedRating = parseInt(this.dataset.rating);
+                    updateStarDisplay();
+                });
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    highlightStars(rating);
+                });
+            });
+            
+            document.getElementById('starRating').addEventListener('mouseleave', function() {
+                highlightStars(selectedRating);
+            });
+        }
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function updateStarDisplay() {
+            highlightStars(selectedRating);
+        }
+
+        function loadReviews() {
+            const reviews = JSON.parse(localStorage.getItem(`reviews_${productId}`)) || [];
+            displayReviews(reviews);
+            updateAverageRating(reviews);
+        }
+
+        function displayReviews(reviews) {
+            const reviewsList = document.getElementById('reviewsList');
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p style="text-align: center; color: #666;">No reviews yet. Be the first to review!</p>';
+                return;
+            }
+            
+            reviewsList.innerHTML = reviews.map(review => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="reviewer-name">${review.name}</span>
+                        <span class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                    </div>
+                    <div class="review-date">${review.date}</div>
+                    <div class="review-text">${review.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateAverageRating(reviews) {
+            if (reviews.length === 0) {
+                document.getElementById('avgStars').innerHTML = '☆☆☆☆☆';
+                document.getElementById('avgRating').textContent = '(0.0)';
+                return;
+            }
+            
+            const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+            const average = (total / reviews.length).toFixed(1);
+            const fullStars = Math.floor(average);
+            const hasHalfStar = average % 1 >= 0.5;
+            
+            let starsHTML = '★'.repeat(fullStars);
+            if (hasHalfStar && fullStars < 5) {
+                starsHTML += '⯨';
+            }
+            starsHTML += '☆'.repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
+            
+            document.getElementById('avgStars').innerHTML = starsHTML;
+            document.getElementById('avgRating').textContent = `(${average})`;
+        }
+
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                alert('Please log in to submit a review!');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (selectedRating === 0) {
+                alert('Please select a rating!');
+                return;
+            }
+            
+            const userName = localStorage.getItem('userName') || 'Anonymous';
+            const text = document.getElementById('reviewText').value;
+            
+            const review = {
+                name: userName,
+                rating: selectedRating,
+                text: text,
+                date: new Date().toLocaleDateString()
+            };
+            
+            const reviews = JSON.parse(localStorage.getItem(`reviews_${productId}`)) || [];
+            reviews.unshift(review);
+            localStorage.setItem(`reviews_${productId}`, JSON.stringify(reviews));
+            
+            displayReviews(reviews);
+            updateAverageRating(reviews);
+            
+            this.reset();
+            selectedRating = 0;
+            highlightStars(0);
+            
+            alert('Thank you for your review!');
+        });
+    </script>
+</body>
+</html>

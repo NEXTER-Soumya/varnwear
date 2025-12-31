@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VARNWEAR - Premium Clothing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <h1>VARNWEAR</h1>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Shop</a></li>
+          <li><a href="trending.html">Trending</a></li>
+          <li><a href="specials.html">Specials</a></li>
+        </ul>
+        <div class="nav-icons">
+          <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+          <div class="profile-dropdown">
+            <span class="profile-icon">👤</span>
+            <div class="dropdown-menu">
+              <a href="#" id="profileLink" style="display: none">Profile</a>
+              <a href="login.html" id="authLink">Log In</a>
+              <a href="cart.html">Cart</a>
+              <a href="orders.html">Orders</a>
+              <a href="wishlist.html">Wishlist</a>
+              <a href="contact.html">Contact</a>
+              <a href="faq.html">FAQ</a>
+            </div>
+          </div>
+          <span class="menu-toggle">☰</span>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Elevate Your Style</h2>
+        <p>Discover premium clothing that defines luxury and comfort</p>
+        <button class="cta-btn">Shop Now</button>
+      </div>
+    </section>
+    <!-- Categories Section -->
+    <section class="categories-section fade-in">
+      <div class="container">
+        <h2>Shop by Category</h2>
+        <div class="categories-grid">
+          <div class="category-card">
+            <div class="category-img">Jackets</div>
+            <h3>Jackets</h3>
+          </div>
+          <div class="category-card">
+            <div class="category-img">Dresses</div>
+            <h3>Dresses</h3>
+          </div>
+          <div class="category-card">
+            <div class="category-img">Shirts</div>
+            <h3>Shirts</h3>
+          </div>
+          <div class="category-card">
+            <div class="category-img">Pants</div>
+            <h3>Pants</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Banner Slider -->
+    <section class="banner-slider fade-in">
+      <div class="container">
+        <div class="trending-header">
+          <h2>Trending Now 🔥</h2>
+          <a href="trending.html" class="view-trending-btn"
+            >View All Trending</a
+          >
+        </div>
+        <div class="slider-container">
+          <div class="slider-track">
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=1'"
+              style="cursor: pointer"
+            >
+              Premium Blazers
+            </div>
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=2'"
+              style="cursor: pointer"
+            >
+              Elegant Dresses
+            </div>
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=3'"
+              style="cursor: pointer"
+            >
+              Luxury Shirts
+            </div>
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=4'"
+              style="cursor: pointer"
+            >
+              Designer Pants
+            </div>
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=5'"
+              style="cursor: pointer"
+            >
+              Leather Jackets
+            </div>
+            <div
+              class="slide"
+              onclick="window.location.href='product-detail.html?id=1'"
+              style="cursor: pointer"
+            >
+              Premium Blazers
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Featured Products -->
+    <section class="featured-products">
+      <div class="container">
+        <h2>Featured Collection</h2>
+        <div class="products-grid">
+          <div class="product-card" data-id="1">
+            <div class="product-image">
+              <div class="placeholder-img">Premium Jacket</div>
+            </div>
+            <div class="product-info">
+              <h3>Classic Blazer</h3>
+              <p class="price">₹2899</p>
+              <div class="product-actions">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="wishlist-btn" onclick="addToWishlist(event, 1)">
+                  ♥
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card" data-id="2">
+            <div class="product-image">
+              <div class="placeholder-img">Elegant Dress</div>
+            </div>
+            <div class="product-info">
+              <h3>Evening Dress</h3>
+              <p class="price">₹1999</p>
+              <div class="product-actions">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="wishlist-btn" onclick="addToWishlist(event, 2)">
+                  ♥
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card" data-id="3">
+            <div class="product-image">
+              <div class="placeholder-img">Luxury Shirt</div>
+            </div>
+            <div class="product-info">
+              <h3>Silk Shirt</h3>
+              <p class="price">₹1499</p>
+              <div class="product-actions">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="wishlist-btn" onclick="addToWishlist(event, 3)">
+                  ♥
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card" data-id="4">
+            <div class="product-image">
+              <div class="placeholder-img">Designer Pants</div>
+            </div>
+            <div class="product-info">
+              <h3>Tailored Trousers</h3>
+              <p class="price">₹1799</p>
+              <div class="product-actions">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="wishlist-btn" onclick="addToWishlist(event, 4)">
+                  ♥
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Promo Banner -->
+    <section class="promo-banner fade-in">
+      <div class="promo-content">
+        <h2>New Season Collection</h2>
+        <p>Discover the latest trends in luxury fashion</p>
+        <a href="specials.html" class="promo-btn">Explore Now</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>VARNWEAR</h3>
+            <p>Premium clothing for the modern individual</p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Shop</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section" id="contact">
+            <h4>Contact</h4>
+            <p>Email: subhra@varnwear.co.in</p>
+            <p>Phone: 912345670</p>
+            <p>Location: Budge Budge</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .orders-page {
+            margin-top: 100px;
+            padding: 60px 0;
+            min-height: 60vh;
+        }
+        
+        .orders-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .orders-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .orders-header h1 {
+            font-size: 3rem;
+            color: #000;
+        }
+        
+        .order-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active {
+            color: #d4af37;
+            border-bottom-color: #d4af37;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .order-item {
+            background: #f8f8f8;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid #d4af37;
+        }
+        
+        .order-item.cancelled {
+            border-left-color: #ff4444;
+        }
+        
+        .order-item.refunded {
+            border-left-color: #4CAF50;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .order-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-delivered {
+            background: #4CAF50;
+            color: #fff;
+        }
+        
+        .status-cancelled {
+            background: #ff4444;
+            color: #fff;
+        }
+        
+        .status-refunded {
+            background: #2196F3;
+            color: #fff;
+        }
+        
+        .status-processing {
+            background: #FFC107;
+            color: #000;
+        }
+        
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .order-product {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .order-product-img {
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .order-info h3 {
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .order-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d4af37;
+            text-align: right;
+        }
+        
+        .order-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        .order-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-track {
+            background: #d4af37;
+            color: #000;
+        }
+        
+        .btn-track:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .btn-cancel {
+            background: #ff4444;
+            color: #fff;
+        }
+        
+        .btn-cancel:hover {
+            background: #cc0000;
+        }
+        
+        .btn-reorder {
+            background: #000;
+            color: #fff;
+        }
+        
+        .btn-reorder:hover {
+            background: #d4af37;
+            color: #000;
+        }
+        
+        .empty-orders {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .empty-orders h2 {
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .order-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-price {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink" style="display: none;">Profile</a>
+                        <a href="login.html" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="orders-page">
+        <div class="orders-container">
+            <div class="orders-header">
+                <h1>My Orders</h1>
+            </div>
+
+            <div class="order-tabs">
+                <button class="tab-btn active" onclick="switchTab('all')">All Orders</button>
+                <button class="tab-btn" onclick="switchTab('ordered')">Ordered</button>
+                <button class="tab-btn" onclick="switchTab('cancelled')">Cancelled</button>
+                <button class="tab-btn" onclick="switchTab('refunded')">Refunded</button>
+            </div>
+
+            <div id="all" class="tab-content active">
+                <div class="order-item">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12345</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 15, 2024</p>
+                        </div>
+                        <span class="order-status status-delivered">Delivered</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Classic Blazer</h3>
+                            <p>Size: M | Quantity: 1</p>
+                            <p>Delivered on: Dec 20, 2024</p>
+                        </div>
+                        <div class="order-price">₹299</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-reorder">Reorder</button>
+                    </div>
+                </div>
+
+                <div class="order-item">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12344</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 10, 2024</p>
+                        </div>
+                        <span class="order-status status-processing">Processing</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Evening Dress</h3>
+                            <p>Size: L | Quantity: 1</p>
+                            <p>Expected delivery: Dec 25, 2024</p>
+                        </div>
+                        <div class="order-price">₹199</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-track">Track Order</button>
+                        <button class="order-btn btn-cancel">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="order-item cancelled">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12343</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 5, 2024</p>
+                        </div>
+                        <span class="order-status status-cancelled">Cancelled</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Silk Shirt</h3>
+                            <p>Size: M | Quantity: 1</p>
+                            <p>Cancelled on: Dec 6, 2024</p>
+                        </div>
+                        <div class="order-price">₹149</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-reorder">Reorder</button>
+                    </div>
+                </div>
+
+                <div class="order-item refunded">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12342</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Nov 28, 2024</p>
+                        </div>
+                        <span class="order-status status-refunded">Refunded</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Tailored Trousers</h3>
+                            <p>Size: L | Quantity: 1</p>
+                            <p>Refunded on: Dec 1, 2024</p>
+                        </div>
+                        <div class="order-price">₹179</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ordered" class="tab-content">
+                <div class="order-item">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12345</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 15, 2024</p>
+                        </div>
+                        <span class="order-status status-delivered">Delivered</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Classic Blazer</h3>
+                            <p>Size: M | Quantity: 1</p>
+                            <p>Delivered on: Dec 20, 2024</p>
+                        </div>
+                        <div class="order-price">₹299</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-reorder">Reorder</button>
+                    </div>
+                </div>
+
+                <div class="order-item">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12344</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 10, 2024</p>
+                        </div>
+                        <span class="order-status status-processing">Processing</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Evening Dress</h3>
+                            <p>Size: L | Quantity: 1</p>
+                            <p>Expected delivery: Dec 25, 2024</p>
+                        </div>
+                        <div class="order-price">₹199</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-track">Track Order</button>
+                        <button class="order-btn btn-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cancelled" class="tab-content">
+                <div class="order-item cancelled">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12343</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Dec 5, 2024</p>
+                        </div>
+                        <span class="order-status status-cancelled">Cancelled</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Silk Shirt</h3>
+                            <p>Size: M | Quantity: 1</p>
+                            <p>Cancelled on: Dec 6, 2024</p>
+                        </div>
+                        <div class="order-price">₹149</div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="order-btn btn-reorder">Reorder</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="refunded" class="tab-content">
+                <div class="order-item refunded">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-id">Order #12342</span>
+                            <p style="color: #666; margin-top: 5px;">Placed on: Nov 28, 2024</p>
+                        </div>
+                        <span class="order-status status-refunded">Refunded</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="order-product">
+                            <div class="order-product-img">Product</div>
+                        </div>
+                        <div class="order-info">
+                            <h3>Tailored Trousers</h3>
+                            <p>Size: L | Quantity: 1</p>
+                            <p>Refunded on: Dec 1, 2024</p>
+                        </div>
+                        <div class="order-price">₹179</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('luxeCart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
+    </script>
+</body>
+</html>

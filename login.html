@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-page {
+            margin-top: 100px;
+            padding: 60px 0;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        .login-box {
+            background: #f8f8f8;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h1 {
+            font-size: 2.5rem;
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 10px;
+            background: #fff;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .login-tab.active {
+            background: #d4af37;
+            border-color: #d4af37;
+            color: #000;
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .phone-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .phone-input select {
+            width: 120px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .phone-input input {
+            flex: 1;
+        }
+        
+        .otp-section {
+            display: none;
+        }
+        
+        .otp-section.active {
+            display: block;
+        }
+        
+        .send-otp-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .send-otp-btn:hover {
+            background: #d4af37;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink">Profile</a>
+                        <a href="#" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="login-page">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-header">
+                    <h1>Welcome</h1>
+                    <p>Sign in to your account</p>
+                </div>
+
+                <div class="login-tabs">
+                    <div class="login-tab active" onclick="switchForm('signin')">Sign In</div>
+                    <div class="login-tab" onclick="switchForm('signup')">Sign Up</div>
+                </div>
+
+                <form id="signin" class="login-form active">
+                    <div class="form-group">
+                        <label for="signin-phone">Mobile Number</label>
+                        <div class="phone-input">
+                            <select id="signin-country">
+                                <option value="+91">+91 (IN)</option>
+                                <option value="+1">+1 (US)</option>
+                                <option value="+44">+44 (UK)</option>
+                                <option value="+86">+86 (CN)</option>
+                            </select>
+                            <input type="tel" id="signin-phone" placeholder="Enter mobile number" required>
+                        </div>
+                    </div>
+                    <button type="button" class="send-otp-btn" id="signinSendOtp">Send OTP</button>
+                    
+                    <div class="otp-section" id="signinOtpSection">
+                        <div class="form-group">
+                            <label for="signin-otp">Enter OTP</label>
+                            <input type="text" id="signin-otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+                        </div>
+                        <button type="submit" class="login-btn">Verify & Sign In</button>
+                    </div>
+                </form>
+
+                <form id="signup" class="login-form">
+                    <div class="form-group">
+                        <label for="signup-phone">Mobile Number</label>
+                        <div class="phone-input">
+                            <select id="signup-country">
+                                <option value="+91">+91 (IN)</option>
+                                <option value="+1">+1 (US)</option>
+                                <option value="+44">+44 (UK)</option>
+                                <option value="+86">+86 (CN)</option>
+                            </select>
+                            <input type="tel" id="signup-phone" placeholder="Enter mobile number" required>
+                        </div>
+                    </div>
+                    <button type="button" class="send-otp-btn" id="signupSendPhoneOtp">Send OTP to Mobile</button>
+                    
+                    <div class="otp-section" id="signupPhoneOtpSection">
+                        <div class="form-group">
+                            <label for="signup-phone-otp">Enter Mobile OTP</label>
+                            <input type="text" id="signup-phone-otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+                        </div>
+                        <button type="button" class="login-btn" id="verifyPhoneOtp">Verify Mobile</button>
+                    </div>
+                    
+                    <div class="otp-section" id="signupEmailSection">
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <button type="button" class="send-otp-btn" id="signupSendEmailOtp">Send OTP to Email</button>
+                    </div>
+                    
+                    <div class="otp-section" id="signupEmailOtpSection">
+                        <div class="form-group">
+                            <label for="signup-email-otp">Enter Email OTP</label>
+                            <input type="text" id="signup-email-otp" placeholder="Enter 6-digit OTP" maxlength="6" required>
+                        </div>
+                        <button type="button" class="login-btn" id="verifyEmailOtp">Verify Email</button>
+                    </div>
+                    
+                    <div class="otp-section" id="signupNameSection">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <button type="submit" class="login-btn">Complete Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function switchForm(formType) {
+            const tabs = document.querySelectorAll('.login-tab');
+            const forms = document.querySelectorAll('.login-form');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            forms.forEach(form => form.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(formType).classList.add('active');
+        }
+
+        document.getElementById('signin').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('signin-phone').value;
+            const country = document.getElementById('signin-country').value;
+            const userName = country + phone;
+            
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', userName);
+            alert('Sign in successful!');
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('signinSendOtp').addEventListener('click', function() {
+            const phone = document.getElementById('signin-phone').value;
+            if (!phone) {
+                alert('Please enter mobile number!');
+                return;
+            }
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('signinOtp', otp);
+            alert(`OTP sent to mobile: ${otp}`);
+            document.getElementById('signinOtpSection').classList.add('active');
+        });
+
+        document.getElementById('signupSendPhoneOtp').addEventListener('click', function() {
+            const phone = document.getElementById('signup-phone').value;
+            if (!phone) {
+                alert('Please enter mobile number!');
+                return;
+            }
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('signupPhoneOtp', otp);
+            alert(`OTP sent to mobile: ${otp}`);
+            document.getElementById('signupPhoneOtpSection').classList.add('active');
+        });
+
+        document.getElementById('verifyPhoneOtp').addEventListener('click', function() {
+            const enteredOtp = document.getElementById('signup-phone-otp').value;
+            const savedOtp = localStorage.getItem('signupPhoneOtp');
+            
+            if (enteredOtp === savedOtp) {
+                alert('Mobile verified successfully!');
+                document.getElementById('signupEmailSection').classList.add('active');
+            } else {
+                alert('Invalid OTP!');
+            }
+        });
+
+        document.getElementById('signupSendEmailOtp').addEventListener('click', function() {
+            const email = document.getElementById('signup-email').value;
+            if (!email) {
+                alert('Please enter email!');
+                return;
+            }
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('signupEmailOtp', otp);
+            alert(`OTP sent to email: ${otp}`);
+            document.getElementById('signupEmailOtpSection').classList.add('active');
+        });
+
+        document.getElementById('verifyEmailOtp').addEventListener('click', function() {
+            const enteredOtp = document.getElementById('signup-email-otp').value;
+            const savedOtp = localStorage.getItem('signupEmailOtp');
+            
+            if (enteredOtp === savedOtp) {
+                alert('Email verified successfully!');
+                document.getElementById('signupNameSection').classList.add('active');
+            } else {
+                alert('Invalid OTP!');
+            }
+        });
+
+        document.getElementById('signup').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', name);
+            alert('Sign up successful!');
+            window.location.href = 'index.html';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            updateAuthUI();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('luxeCart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
+        
+        function updateAuthUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const authLink = document.getElementById('authLink');
+            const profileLink = document.getElementById('profileLink');
+            
+            if (isLoggedIn) {
+                authLink.textContent = 'Log Out';
+                authLink.href = '#';
+                authLink.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userName');
+                    alert('Logged out successfully!');
+                    window.location.href = 'index.html';
+                };
+                profileLink.style.display = 'block';
+            } else {
+                authLink.textContent = 'Log In';
+                authLink.href = 'login.html';
+                authLink.onclick = null;
+                profileLink.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

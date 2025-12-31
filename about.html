@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .about-page {
+            margin-top: 100px;
+            padding: 60px 0;
+        }
+        
+        .about-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .about-hero h1 {
+            font-size: 3rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .about-hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .about-section {
+            margin-bottom: 3rem;
+        }
+        
+        .about-section h2 {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+        
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .value-card {
+            background: #f8f8f8;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+        }
+        
+        .value-card h3 {
+            color: #000;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .value-card p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink" style="display: none;">Profile</a>
+                        <a href="login.html" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="about-page">
+        <div class="about-content">
+            <div class="about-hero">
+                <h1>About VARNWEAR</h1>
+                <p>Redefining luxury fashion with timeless elegance and modern sophistication</p>
+            </div>
+
+            <div class="about-section">
+                <h2>Our Story</h2>
+                <p>Founded with a vision to bring premium quality clothing to the modern individual, VARNWEAR has been at the forefront of luxury fashion. We believe that clothing is more than just fabric—it's an expression of who you are.</p>
+                <p>Every piece in our collection is carefully curated and crafted to meet the highest standards of quality, comfort, and style. From classic blazers to elegant dresses, we offer clothing that stands the test of time.</p>
+            </div>
+
+            <div class="about-section">
+                <h2>Our Mission</h2>
+                <p>To provide exceptional clothing that empowers individuals to express their unique style with confidence. We are committed to quality, sustainability, and creating pieces that you'll treasure for years to come.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <h3>Quality</h3>
+                    <p>Premium materials and expert craftsmanship in every piece</p>
+                </div>
+                <div class="value-card">
+                    <h3>Style</h3>
+                    <p>Timeless designs that never go out of fashion</p>
+                </div>
+                <div class="value-card">
+                    <h3>Comfort</h3>
+                    <p>Luxurious fabrics that feel as good as they look</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

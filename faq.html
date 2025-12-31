@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .faq-page {
+            margin-top: 100px;
+            padding: 60px 0;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .faq-header h1 {
+            font-size: 3rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-item {
+            background: #f8f8f8;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f0f0f0;
+        }
+        
+        .faq-question h3 {
+            color: #000;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .faq-icon {
+            font-size: 1.5rem;
+            color: #d4af37;
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: #fff;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: #d4af37;
+            border-color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink" style="display: none;">Profile</a>
+                        <a href="login.html" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="faq-page">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about VARNWEAR</p>
+            </div>
+
+            <div class="faq-categories">
+                <button class="category-btn active">All</button>
+                <button class="category-btn">Orders</button>
+                <button class="category-btn">Shipping</button>
+                <button class="category-btn">Returns</button>
+                <button class="category-btn">Payment</button>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item" data-category="orders">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>How do I track my order?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            You can track your order by logging into your account and visiting the Orders page. You'll find tracking information for all your orders there. You'll also receive tracking updates via email.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="orders">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Can I cancel my order?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, you can cancel your order within 24 hours of placing it. Go to your Orders page and click the Cancel button next to the order you wish to cancel. After 24 hours, the order cannot be cancelled.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the shipping charges?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We charge a flat shipping fee of ₹100 for all orders. Orders above ₹2000 qualify for free shipping. Delivery typically takes 5-7 business days.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Do you ship internationally?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Currently, we only ship within India. We're working on expanding our shipping to international locations. Stay tuned for updates!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="returns">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is your return policy?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We offer a 30-day return policy. Items must be unworn, unwashed, and in original condition with tags attached. To initiate a return, contact our customer service team.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="returns">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>How long does a refund take?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Once we receive your returned item, refunds are processed within 5-7 business days. The amount will be credited to your original payment method.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What payment methods do you accept?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We accept all major credit/debit cards, UPI, net banking, and cash on delivery. All payments are processed securely through our payment gateway.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="payment">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Is it safe to use my credit card on your site?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, absolutely! We use industry-standard SSL encryption to protect your payment information. Your card details are never stored on our servers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('luxeCart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
+    </script>
+</body>
+</html>

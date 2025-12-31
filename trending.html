@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending - VARNWEAR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .trending-page {
+            margin-top: 100px;
+            padding: 60px 0;
+            background: linear-gradient(180deg, #f8f8f8 0%, #fff 100%);
+        }
+        
+        .trending-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .trending-header h1 {
+            font-size: 3.5rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .trending-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .trending-badge {
+            background: linear-gradient(135deg, #d4af37, #f0e68c);
+            color: #000;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4);
+            z-index: 1;
+        }
+        
+        .product-card {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>VARNWEAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="trending.html">Trending</a></li>
+                <li><a href="specials.html">Specials</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="cart-icon">🛒 <span class="cart-count">0</span></span>
+                <div class="profile-dropdown">
+                    <span class="profile-icon">👤</span>
+                    <div class="dropdown-menu">
+                        <a href="#" id="profileLink" style="display: none;">Profile</a>
+                        <a href="login.html" id="authLink">Log In</a>
+                        <a href="cart.html">Cart</a>
+                        <a href="orders.html">Orders</a>
+                        <a href="wishlist.html">Wishlist</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+                <span class="menu-toggle">☰</span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="trending-page">
+        <div class="container">
+            <div class="trending-header">
+                <h1>🔥 Trending Now</h1>
+                <p>Most popular items this season - Shop before they're gone!</p>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card" data-id="5">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Leather Jacket</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Leather Bomber</h3>
+                        <p class="price">₹3999</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 5)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="2">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Elegant Dress</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Evening Dress</h3>
+                        <p class="price">₹1999</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 2)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="9">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Wool Coat</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Wool Overcoat</h3>
+                        <p class="price">₹4599</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 9)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="6">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Cocktail Dress</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Cocktail Dress</h3>
+                        <p class="price">₹2499</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 6)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="1">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Premium Jacket</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Classic Blazer</h3>
+                        <p class="price">₹2899</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 1)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="3">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Luxury Shirt</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Silk Shirt</h3>
+                        <p class="price">₹1499</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 3)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="8">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Chino Pants</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Designer Chinos</h3>
+                        <p class="price">₹1299</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 8)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="10">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Summer Dress</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Summer Maxi Dress</h3>
+                        <p class="price">₹1699</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 10)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="11">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Formal Shirt</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Formal Dress Shirt</h3>
+                        <p class="price">₹1199</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 11)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="12">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Formal Pants</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Formal Suit Pants</h3>
+                        <p class="price">₹1999</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 12)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="4">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Designer Pants</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Tailored Trousers</h3>
+                        <p class="price">₹1799</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 4)">♥</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-id="7">
+                    <span class="trending-badge">🔥 HOT</span>
+                    <div class="product-image">
+                        <div class="placeholder-img">Cotton Shirt</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Premium Cotton Shirt</h3>
+                        <p class="price">₹899</p>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="wishlist-btn" onclick="addToWishlist(event, 7)">♥</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VARNWEAR</h3>
+                    <p>Premium clothing for the modern individual</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: subhra@varnwear.co.in</p>
+                    <p>Phone: 912345670</p>
+                    <p>Location: Budge Budge</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VARNWEAR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
