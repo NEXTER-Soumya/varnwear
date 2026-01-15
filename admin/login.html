@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - VarnWear</title>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="admin-body">
+    <div class="admin-login-container">
+      <div class="admin-login-box">
+        <h1 class="text-center mb-3">Admin Login</h1>
+        <p class="text-center mb-4" style="color: var(--gray-dark)">
+          VarnWear Admin Panel
+        </p>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-input" id="username" required />
+            <span class="form-error" id="usernameError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="password" required />
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <div id="alertBox"></div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-large"
+            style="width: 100%"
+          >
+            Login
+          </button>
+        </form>
+
+        <p
+          class="text-center mt-3"
+          style="color: var(--gray-dark); font-size: 0.9rem"
+        >
+          Contact administrator for credentials
+        </p>
+      </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+  <script src="../js/admin-auth.js"></script>
+    <script>
+      // Check if already logged in
+      if (isAdminLoggedIn()) {
+        window.location.href = "index.html";
+      }
+
+      document
+        .getElementById("adminLoginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value;
+
+          document
+            .querySelectorAll(".form-error")
+            .forEach((el) => (el.textContent = ""));
+
+          const result = await adminLogin(username, password);
+
+          if (result.success) {
+            showAlert("Login successful! Redirecting...", "success");
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1000);
+          } else {
+            showAlert(result.message, "error");
+          }
+        });
+
+      function showAlert(message, type) {
+        document.getElementById(
+          "alertBox"
+        ).innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+      }
+    </script>
+  </body>
+</html>

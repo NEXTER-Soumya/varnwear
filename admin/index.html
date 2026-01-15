@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - VarnWear</title>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="admin-body">
+    <!-- Admin Navbar -->
+    <nav class="admin-navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">VarnWear Admin</a>
+        <ul class="admin-menu">
+          <li><a href="index.html" class="active">Dashboard</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="orders.html">Orders</a></li>
+          <li><a href="users.html">Users</a></li>
+        </ul>
+        <button class="btn btn-outline btn-small" onclick="adminLogout()">
+          Logout
+        </button>
+      </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="admin-container">
+      <h1 class="mb-4">Dashboard</h1>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Products</h3>
+          <p class="stat-value" id="totalProducts">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Orders</h3>
+          <p class="stat-value" id="totalOrders">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Pending Orders</h3>
+          <p class="stat-value" id="pendingOrders">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Revenue</h3>
+          <p class="stat-value text-gold" id="totalRevenue">₹0</p>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="admin-section mt-4">
+        <h2 class="mb-3">Recent Orders</h2>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recentOrders">
+              <tr>
+                <td colspan="5" class="text-center">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+  <script src="../js/admin-auth.js"></script>
+    
+    
+    <script src="../js/orders.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+      // Check admin authentication
+      if (!requireAdminAuth()) {
+        // Will redirect to login
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadDashboard();
+      });
+
+      async function loadDashboard() {
+        const products = await getAllProducts();
+        const stats = getOrderStats();
+        const orders = getAllOrders().slice(0, 10);
+
+        // Update stats
+        document.getElementById("totalProducts").textContent = products.length;
+        document.getElementById("totalOrders").textContent = stats.total;
+        document.getElementById("pendingOrders").textContent = stats.pending;
+        document.getElementById(
+          "totalRevenue"
+        ).textContent = `₹${stats.totalRevenue.toLocaleString()}`;
+
+        // Display recent orders
+        const recentOrdersBody = document.getElementById("recentOrders");
+        if (orders.length === 0) {
+          recentOrdersBody.innerHTML =
+            '<tr><td colspan="5" class="text-center">No orders yet</td></tr>';
+        } else {
+          recentOrdersBody.innerHTML = orders
+            .map((order) => {
+              const user = getUserById(order.userId);
+              return `
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${
+                              user
+                                ? user.firstName + " " + user.lastName
+                                : "Unknown"
+                            }</td>
+                            <td>₹${order.total.toLocaleString()}</td>
+                            <td><span class="status-badge status-${
+                              order.status
+                            }">${order.status}</span></td>
+                            <td>${formatDate(order.createdAt)}</td>
+                        </tr>
+                    `;
+            })
+            .join("");
+        }
+      }
+
+      function getUserById(userId) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        return users.find((u) => u.id === userId);
+      }
+    </script>
+  </body>
+</html>

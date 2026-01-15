@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VarnWear - Premium Fashion</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <!-- Logo -->
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            
+            <!-- Menu Links -->
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            
+            <!-- Right Section -->
+            <div class="navbar-right">
+                <!-- Login Button (shown when NOT logged in) -->
+                <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+                
+                <!-- User Section (shown when logged in) -->
+                <div class="navbar-user" id="userSection" style="display: none;">
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown">
+                        <div class="profile-icon" id="profileIcon">
+                            <img id="profileImg" src="" alt="Profile" style="display: none;">
+                            <span id="profileInitials"></span>
+                        </div>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">Profile</a>
+                            <a href="orders.html" class="dropdown-item">Orders</a>
+                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="about.html" class="dropdown-item">About Us</a>
+                            <a href="faq.html" class="dropdown-item">FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">Logout</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Icon -->
+                    <a href="cart.html" class="cart-icon">
+                        <span class="icon">🛒</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="js/navbar.js"></script>
+</body>
+</html>

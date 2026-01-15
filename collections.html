@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            <div class="navbar-right">
+                <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+                <div class="navbar-user" id="userSection" style="display: none;">
+                    <div class="dropdown">
+                        <div class="profile-icon" id="profileIcon">
+                            <img id="profileImg" src="" alt="Profile" style="display: none;">
+                            <span id="profileInitials"></span>
+                        </div>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">Profile</a>
+                            <a href="orders.html" class="dropdown-item">Orders</a>
+                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="about.html" class="dropdown-item">About Us</a>
+                            <a href="faq.html" class="dropdown-item">FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="cart-icon">
+                        <span class="icon">🛒</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Collections Section -->
+    <div class="container" style="padding: 3rem 0;">
+        <h1 class="mb-4">Shop by Collection</h1>
+        
+        <div class="grid grid-4" id="collectionsGrid">
+            <!-- Collections will be rendered here -->
+        </div>
+    </div>
+<footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VarnWear</h3>
+          <p>📍 South 24 Parganas, West Bengal 700139</p>
+          <p>📞 +91 98765 43210</p>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+              width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Links</h3>
+          <ul style="display: flex; gap: 10px;">
+            <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i>
+              </a></li>
+            <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank" class="social-icon facebook">
+                <i class="fab fa-facebook-f"></i>
+
+              </a></li>
+            <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank" class="social-icon instagram">
+                <i class="fab fa-instagram"></i>
+
+              </a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 VarnWear. All rights reserved.</p>
+        </div>
+      </div>
+  </footer>
+    <script src="js/api.js"></script>
+    <script src="js/access-control.js"></script>
+    <script src="js/navbar.js"></script>
+    <style>
+      .product-card-hover {
+        position: relative;
+        height: 380px;
+        border-radius: 2px;
+        overflow: hidden;
+        cursor: pointer;
+        background: #000;
+      }
+      .product-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .product-card-hover:hover .product-bg-img {
+        transform: scale(1.08);
+      }
+      .product-hover-content {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25), transparent);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.2rem;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.45s ease;
+      }
+      .product-card-hover:hover .product-hover-content {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .product-title {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+      }
+      .product-desc {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.9rem;
+      }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCollections();
+        });
+
+        async function loadCollections() {
+            const categories = await getAllCategories();
+            const grid = document.getElementById('collectionsGrid');
+            
+            if (categories.length === 0) {
+                grid.innerHTML = '<p class="text-center">No collections available</p>';
+                return;
+            }
+
+            const collectionsHTML = [];
+            for (const category of categories) {
+                const products = await getProductsByCategory(category);
+                const firstProduct = products[0];
+                const image = firstProduct && firstProduct.images && firstProduct.images[0] ? firstProduct.images[0] : 'assets/images/placeholder.jpg';
+                
+                collectionsHTML.push(`
+                    <div class="product-card-hover" onclick="viewCollection('${category}')">
+                        <img src="${image}" alt="${category}" class="product-bg-img">
+                        <div class="product-hover-content">
+                            <h3 class="product-title">${category}</h3>
+                            <p class="product-desc">${products.length} Products</p>
+                        </div>
+                    </div>
+                `);
+            }
+            
+            grid.innerHTML = collectionsHTML.join('');
+        }
+
+        function viewCollection(category) {
+            window.location.href = `products.html?category=${encodeURIComponent(category)}`;
+        }
+    </script>
+</body>
+</html>

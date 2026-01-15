@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            <div class="navbar-right">
+                <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+                <div class="navbar-user" id="userSection" style="display: none;">
+                    <div class="dropdown">
+                        <div class="profile-icon" id="profileIcon">
+                            <img id="profileImg" src="" alt="Profile" style="display: none;">
+                            <span id="profileInitials"></span>
+                        </div>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">Profile</a>
+                            <a href="orders.html" class="dropdown-item">Orders</a>
+                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="about.html" class="dropdown-item">About Us</a>
+                            <a href="faq.html" class="dropdown-item">FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="cart-icon">
+                        <span class="icon">🛒</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <div class="container" style="padding: 3rem 0; max-width: 1000px;">
+        <h1 class="mb-4">My Profile</h1>
+
+        <!-- Profile Picture Section -->
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <div style="position: relative; display: inline-block;">
+                <div id="profileAvatar"
+                    style="width: 150px; height: 150px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 700; color: var(--black); overflow: hidden; border: 4px solid var(--black);">
+                    <img id="avatarImg" src="" alt="Profile"
+                        style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                    <span id="avatarInitials"></span>
+                </div>
+                <label for="profileImageInput"
+                    style="position: absolute; bottom: 0; right: 0; background: var(--black); color: var(--gold); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--white); z-index: 10;">
+                    <i class="fas fa-camera" style="pointer-events: none;"></i>
+                </label>
+                <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+            </div>
+            <p style="margin-top: 1rem; color: var(--gray-dark); font-size: 0.9rem;">Click camera icon to change picture
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <!-- Personal Details -->
+            <div style="background: var(--gray-light); padding: 2rem; border-radius: 4px;">
+                <h3 class="mb-3" style="color: var(--gold);">Personal Details</h3>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" id="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" id="phone" maxlength="10">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Details</button>
+                </form>
+            </div>
+
+            <!-- Default Address -->
+            <div style="background: var(--gray-light); padding: 2rem; border-radius: 4px;">
+                <h3 class="mb-3" style="color: var(--gold);">Default Address</h3>
+                <form id="addressForm">
+                    <div class="form-group">
+                        <label class="form-label">Street Address</label>
+                        <input type="text" class="form-input" id="street" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <input type="text" class="form-input" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input type="text" class="form-input" id="state" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pincode</label>
+                        <input type="text" class="form-input" id="pincode" maxlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Address</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="alertBox" class="mt-3"></div>
+
+        <!-- Data Backup Section 
+        <div style="background: var(--gray-light); padding: 2rem; border-radius: 4px; margin-top: 2rem; text-align: center;">
+            <h3 class="mb-3" style="color: var(--gold);">Data Backup</h3>
+            <p style="color: var(--gray-dark); margin-bottom: 1rem;">Export your data to keep a backup or import previously saved data</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-outline" onclick="exportData()">📥 Export Data</button>
+                <label class="btn btn-outline" style="margin: 0; cursor: pointer;">
+                    📤 Import Data
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+                </label>
+            </div>
+        </div>
+        -->
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VarnWear</h3>
+                    <p>📍 South 24 Parganas, West Bengal 700139</p>
+                    <p>📞 +91 98765 43210</p>
+                    <div class="map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+                            width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="orders.html">My Orders</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Social Links</h3>
+                    <ul style="display: flex; gap: 10px;">
+                        <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a></li>
+                        <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank"
+                                class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+
+                            </a></li>
+                        <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank"
+                                class="social-icon instagram">
+                                <i class="fab fa-instagram"></i>
+
+                            </a></li>
+                    </ul>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 VarnWear. All rights reserved.</p>
+                </div>
+            </div>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/access-control.js"></script>
+    <script src="js/toast.js"></script>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/backup.js"></script>
+    <script>
+        if (!requireUserAuth()) { }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProfile();
+        });
+
+        function loadProfile() {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            document.getElementById('firstName').value = user.firstName || '';
+            document.getElementById('lastName').value = user.lastName || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+
+            if (user.address) {
+                document.getElementById('street').value = user.address.street || '';
+                document.getElementById('city').value = user.address.city || '';
+                document.getElementById('state').value = user.address.state || '';
+                document.getElementById('pincode').value = user.address.pincode || '';
+            }
+
+            if (user.profileImage) {
+                document.getElementById('avatarImg').src = user.profileImage;
+                document.getElementById('avatarImg').style.display = 'block';
+                document.getElementById('avatarInitials').style.display = 'none';
+            } else {
+                const initials = (user.firstName.charAt(0) + user.lastName.charAt(0)).toUpperCase();
+                document.getElementById('avatarInitials').textContent = initials;
+            }
+        }
+
+        document.getElementById('profileImageInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 500 * 1024) {
+                showToast('Image too large. Please use image under 500KB', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            const profileImage = await compressImage(file, 200, 200);
+            const result = await updateUserProfile({ profileImage });
+
+            if (result.success) {
+                document.getElementById('avatarImg').src = profileImage;
+                document.getElementById('avatarImg').style.display = 'block';
+                document.getElementById('avatarInitials').style.display = 'none';
+
+                const navImg = document.getElementById('profileImg');
+                const navInitials = document.getElementById('profileInitials');
+                if (navImg && navInitials) {
+                    navImg.src = profileImage;
+                    navImg.style.display = 'block';
+                    navInitials.style.display = 'none';
+                }
+
+                showToast('Profile picture updated!', 'success');
+            } else {
+                showToast(result.message, 'error');
+            }
+        });
+
+        function compressImage(file, maxWidth, maxHeight) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height *= maxWidth / width;
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxHeight) {
+                                width *= maxHeight / height;
+                                height = maxHeight;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (phone && !validatePhone(phone)) {
+                showToast('Valid 10-digit phone number required', 'error');
+                return;
+            }
+
+            const result = await updateUserProfile({ firstName, lastName, phone });
+
+            if (result.success) {
+                showToast('Profile updated successfully!', 'success');
+                loadProfile();
+            } else {
+                showToast(result.message, 'error');
+            }
+        });
+
+        document.getElementById('addressForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const address = {
+                street: document.getElementById('street').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                state: document.getElementById('state').value.trim(),
+                pincode: document.getElementById('pincode').value.trim()
+            };
+
+            if (address.pincode.length !== 6 || !/^\d{6}$/.test(address.pincode)) {
+                showToast('Valid 6-digit pincode required', 'error');
+                return;
+            }
+
+            const result = await updateUserProfile({ address });
+
+            if (result.success) {
+                showToast('Address saved successfully!', 'success');
+                loadProfile();
+            } else {
+                showToast(result.message, 'error');
+            }
+        });
+
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            importData(file).then(result => {
+                showToast(result.message, 'success');
+                setTimeout(() => location.reload(), 1500);
+            }).catch(error => {
+                showToast(error.message, 'error');
+            });
+        }
+    </script>
+</body>
+
+</html>

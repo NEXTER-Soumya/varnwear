@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .faq-hero {
+            background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .faq-hero h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .faq-container {
+            padding: 4rem 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--white);
+            border: 2px solid var(--gray-medium);
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: var(--gray-light);
+        }
+        .faq-question.active {
+            background: var(--black);
+            color: var(--gold);
+        }
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+            color: var(--gray-dark);
+            line-height: 1.8;
+        }
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 1.5rem;
+            border-top: 2px solid var(--gold);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">VarnWear</a>
+        <ul class="navbar-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="collections.html">Collections</a></li>
+        </ul>
+        <div class="navbar-right">
+          <a href="login.html" class="btn btn-primary btn-small" id="loginBtn"
+            >Login</a
+          >
+          <div class="navbar-user" id="userSection" style="display: none">
+            <div class="dropdown">
+              <div class="profile-icon" id="profileIcon">
+                <img
+                  id="profileImg"
+                  src=""
+                  alt="Profile"
+                  style="display: none"
+                />
+                <span id="profileInitials"></span>
+              </div>
+              <div class="dropdown-menu" id="profileDropdown">
+                <a href="profile.html" class="dropdown-item">Profile</a>
+                <a href="orders.html" class="dropdown-item">Orders</a>
+                <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                <a href="contact.html" class="dropdown-item">Contact Us</a>
+                <a href="about.html" class="dropdown-item">About Us</a>
+                <a href="faq.html" class="dropdown-item">FAQ</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+              </div>
+            </div>
+            <a href="cart.html" class="cart-icon">
+              <span class="icon">🛒</span>
+              <span class="badge" id="cartCount">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="faq-hero">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions</p>
+        </div>
+    </section>
+
+    <section class="faq-container container">
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How do I place an order?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                Browse our products, add items to your cart, and proceed to checkout. You'll need to create an account or login to complete your purchase.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What payment methods do you accept?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                We accept all major credit/debit cards, UPI, net banking, and cash on delivery for orders within India.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How long does shipping take?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                Standard delivery takes 5-7 business days. Express delivery is available for 2-3 business days at an additional cost.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>What is your return policy?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                We offer a 30-day return policy. Items must be unused, in original packaging with tags attached. Return shipping is free for defective items.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How do I track my order?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                Once your order ships, you'll receive a tracking number via email. You can also track orders from your account dashboard under "My Orders".
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Do you ship internationally?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                Currently, we only ship within India. International shipping will be available soon.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>How do I contact customer support?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                You can reach us via email at support@varnwear.com, call us at +91 98765 43210, or use the contact form on our Contact Us page.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Can I modify or cancel my order?</span>
+                <span class="faq-icon">▼</span>
+            </div>
+            <div class="faq-answer">
+                Orders can be modified or cancelled within 24 hours of placement. Contact customer support immediately for assistance.
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VarnWear</h3>
+          <p>📍 South 24 Parganas, West Bengal 700139</p>
+          <p>📞 +91 98765 43210</p>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+              width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Links</h3>
+          <ul style="display: flex; gap: 10px;">
+            <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i>
+              </a></li>
+            <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank" class="social-icon facebook">
+                <i class="fab fa-facebook-f"></i>
+
+              </a></li>
+            <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank" class="social-icon instagram">
+                <i class="fab fa-instagram"></i>
+
+              </a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 VarnWear. All rights reserved.</p>
+        </div>
+      </div>
+  </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+                
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

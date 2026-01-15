@@ -1,0 +1,285 @@
+/* ========================================
+   VarnWear - Admin Panel Styles
+   ======================================== */
+
+/* === Admin Body === */
+.admin-body {
+    background: #F5F5F5;
+}
+
+/* === Admin Login === */
+.admin-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+}
+
+.admin-login-box {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 3rem;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+/* === Admin Navbar === */
+.admin-navbar {
+    background: var(--white);
+    color: var(--black);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.admin-navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-menu {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+}
+
+.admin-menu a {
+    color: var(--black);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.admin-menu a:hover,
+.admin-menu a.active {
+    background: var(--gold);
+    color: var(--black);
+}
+
+/* === Admin Container === */
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* === Stats Grid === */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: var(--gray-dark);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+/* === Admin Section === */
+.admin-section {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* === Admin Table === */
+.admin-table-container {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background: var(--black);
+    color: var(--white);
+}
+
+.admin-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+.admin-table tbody tr:hover {
+    background: var(--gray-light);
+}
+
+/* === Status Badge === */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #FFF3CD;
+    color: #856404;
+}
+
+.status-shipped {
+    background: #D1ECF1;
+    color: #0C5460;
+}
+
+.status-delivered {
+    background: #D4EDDA;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #F8D7DA;
+    color: #721C24;
+}
+
+/* === Order Detail Section === */
+.order-detail-section {
+    background: var(--gray-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.order-detail-section h4 {
+    margin-bottom: 1rem;
+    color: var(--black);
+}
+
+.order-detail-section p {
+    margin-bottom: 0.5rem;
+    color: var(--gray-dark);
+}
+
+/* === Responsive === */
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-navbar .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .admin-menu {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .admin-table {
+        font-size: 0.85rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+/* Modal size control */
+.modal-content {
+    max-width: 1000px;
+    max-height: 85vh;
+    overflow: hidden;
+}
+
+/* Grid layout */
+.user-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    height: calc(85vh - 100px);
+}
+
+/* Columns */
+.user-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Cards */
+.order-detail-section {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    font-size: 0.95rem;
+}
+
+/* Profile image */
+.profile-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 0.5rem;
+}
+
+/* Scroll only where needed */
+.scroll-box {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+/* Order row */
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.4rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+/* Mobile fallback */
+@media (max-width: 900px) {
+    .user-modal-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}

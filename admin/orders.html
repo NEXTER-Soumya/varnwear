@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Orders - VarnWear Admin</title>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ORDER MODAL – FULL CARD SCROLL */
+#orderModal .modal-content {
+    max-width: 900px;
+    max-height: 85vh;        /* Never exceed screen */
+    overflow-y: auto;        /* Whole card scrolls */
+    padding-right: 0.5rem;   /* Space for scrollbar */
+}
+
+/* Optional: smooth scrolling feel */
+#orderModal .modal-content {
+    scroll-behavior: smooth;
+}
+
+/* Improve spacing consistency */
+#orderModal .order-detail-section {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+/* Keep headings visually separated */
+#orderModal h2,
+#orderModal h3 {
+    margin-top: 0.5rem;
+}
+
+/* Scrollbar polish (optional but nice) */
+#orderModal .modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#orderModal .modal-content::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 10px;
+}
+
+      .order-details-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .order-details-scroll::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="admin-body">
+    <!-- Admin Navbar -->
+    <nav class="admin-navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">VarnWear Admin</a>
+        <ul class="admin-menu">
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="orders.html" class="active">Orders</a></li>
+          <li><a href="users.html">Users</a></li>
+        </ul>
+        <button class="btn btn-outline btn-small" onclick="adminLogout()">
+          Logout
+        </button>
+      </div>
+    </nav>
+
+    <!-- Orders Content -->
+    <div class="admin-container">
+      <h1 class="mb-4">Manage Orders</h1>
+
+      <!-- Orders Table -->
+      <div class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Items</th>
+              <th>Amount</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable">
+            <tr>
+              <td colspan="8" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderModal">
+      <div class="modal-content" style="max-width: 700px">
+        <span class="modal-close" onclick="closeOrderModal()">&times;</span>
+        <h2>Order Details</h2>
+        <div class="order-details-scroll">
+          <div id="orderDetails"></div>
+        </div>
+
+        <div class="mt-4">
+          <h3>Update Status</h3>
+          <select class="form-select" id="orderStatus">
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-primary mt-2" onclick="updateStatus()">
+            Update Status
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <h3>Delivery Confirmation</h3>
+          <div class="form-group">
+            <label class="form-label">Delivery Date</label>
+            <input type="date" class="form-input" id="deliveryDate" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message to Customer</label>
+            <textarea
+              class="form-textarea"
+              id="confirmationMessage"
+              placeholder="Your order has been delivered..."
+            ></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="sendConfirmation()">
+            Send Confirmation
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+  <script src="../js/admin-auth.js"></script>
+    
+    <script src="../js/orders.js"></script>
+    <script src="../js/admin-orders.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+      if (!requireAdminAuth()) {
+      }
+
+      let currentOrderId = null;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadOrders();
+      });
+
+      function loadOrders() {
+        const orders = getAllOrders().sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        const tbody = document.getElementById("ordersTable");
+
+        if (orders.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="8" class="text-center">No orders found</td></tr>';
+        } else {
+          tbody.innerHTML = orders
+            .map((order) => {
+              const user = getUserById(order.userId);
+              return `
+                        <tr>
+                            <td>${order.id}</td>
+                            <td>${order.shippingAddress.fullName}</td>
+                            <td>${order.shippingAddress.phone}</td>
+                            <td>${order.items.length} items</td>
+                            <td>₹${order.total.toLocaleString()}</td>
+                            <td>${order.paymentMethod}</td>
+                            <td><span class="status-badge status-${
+                              order.status
+                            }">${order.status}</span></td>
+                            <td>
+                                <button class="btn btn-small btn-outline" onclick="viewOrder('${
+                                  order.id
+                                }')">View</button>
+                            </td>
+                        </tr>
+                    `;
+            })
+            .join("");
+        }
+      }
+
+      function getUserById(userId) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        return users.find((u) => u.id === userId);
+      }
+
+      function viewOrder(orderId) {
+        currentOrderId = orderId;
+        const order = getOrderById(orderId);
+        const user = getUserById(order.userId);
+
+        document.getElementById("orderStatus").value = order.status;
+
+        const details = `
+                <div class="order-detail-section">
+                    <h4>Customer Information</h4>
+                    <p><strong>Name:</strong> ${
+                      order.shippingAddress.fullName
+                    }</p>
+                    <p><strong>Email:</strong> ${user ? user.email : "N/A"}</p>
+                    <p><strong>Phone:</strong> ${
+                      order.shippingAddress.phone
+                    }</p>
+                    <p><strong>Address:</strong> ${
+                      order.shippingAddress.address
+                    }, ${order.shippingAddress.city}, ${
+          order.shippingAddress.state
+        } - ${order.shippingAddress.pinCode}</p>
+                </div>
+
+                <div class="order-detail-section">
+                    <h4>Order Items</h4>
+                    ${order.items
+                      .map(
+                        (item) => `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>${item.productName} ${
+                          item.size ? "(" + item.size + ")" : ""
+                        } × ${item.quantity}</span>
+                            <span>₹${(
+                              item.price * item.quantity
+                            ).toLocaleString()}</span>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                    <hr>
+                    <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--gold);">
+                        <span>Total:</span>
+                        <span>₹${order.total.toLocaleString()}</span>
+                    </div>
+                </div>
+
+                ${
+                  order.deliveryDate
+                    ? `
+                    <div class="order-detail-section">
+                        <h4>Delivery Information</h4>
+                        <p><strong>Delivery Date:</strong> ${
+                          order.deliveryDate
+                        }</p>
+                        ${
+                          order.confirmationMessage
+                            ? `<p><strong>Message:</strong> ${order.confirmationMessage}</p>`
+                            : ""
+                        }
+                    </div>
+                `
+                    : ""
+                }
+            `;
+
+        document.getElementById("orderDetails").innerHTML = details;
+        document.getElementById("orderModal").classList.add("show");
+      }
+
+      function closeOrderModal() {
+        document.getElementById("orderModal").classList.remove("show");
+        currentOrderId = null;
+      }
+
+      function updateStatus() {
+        const newStatus = document.getElementById("orderStatus").value;
+        const result = updateOrderStatus(currentOrderId, newStatus);
+
+        if (result.success) {
+          alert("Order status updated successfully");
+          closeOrderModal();
+          loadOrders();
+        } else {
+          alert(result.message);
+        }
+      }
+
+      function sendConfirmation() {
+        const deliveryDate = document.getElementById("deliveryDate").value;
+        const message = document
+          .getElementById("confirmationMessage")
+          .value.trim();
+
+        if (!deliveryDate) {
+          alert("Please select delivery date");
+          return;
+        }
+
+        if (!message) {
+          alert("Please enter confirmation message");
+          return;
+        }
+
+        const result = confirmDelivery(currentOrderId, deliveryDate, message);
+
+        if (result.success) {
+          alert("Delivery confirmation sent successfully");
+          closeOrderModal();
+          loadOrders();
+        } else {
+          alert(result.message);
+        }
+      }
+    </script>
+  </body>
+</html>

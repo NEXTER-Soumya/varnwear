@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            <div class="navbar-right">
+                <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+                <div class="navbar-user" id="userSection" style="display: none;">
+                    <div class="dropdown">
+                        <div class="profile-icon" id="profileIcon">
+                            <img id="profileImg" src="" alt="Profile" style="display: none;">
+                            <span id="profileInitials"></span>
+                        </div>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">Profile</a>
+                            <a href="orders.html" class="dropdown-item">Orders</a>
+                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="about.html" class="dropdown-item">About Us</a>
+                            <a href="faq.html" class="dropdown-item">FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="cart-icon">
+                        <span class="icon">🛒</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Wishlist Section -->
+    <div class="container" style="padding: 3rem 0;">
+        <h1 class="mb-4">My Wishlist</h1>
+
+        <!-- Empty Wishlist Message -->
+        <div id="emptyWishlist" style="display: none; text-align: center; padding: 4rem 0;">
+            <h2>Your wishlist is empty</h2>
+            <p style="color: var(--gray-dark); margin: 1rem 0;">Save your favorite items here</p>
+            <a href="products.html" class="btn btn-primary">Browse Products</a>
+        </div>
+
+        <!-- Wishlist Items -->
+        <div class="grid grid-4" id="wishlistGrid">
+            <!-- Wishlist items will be rendered here -->
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VarnWear</h3>
+                    <p>📍 South 24 Parganas, West Bengal 700139</p>
+                    <p>📞 +91 98765 43210</p>
+                    <div class="map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+                            width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="orders.html">My Orders</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Social Links</h3>
+                    <ul style="display: flex; gap: 10px;">
+                        <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a></li>
+                        <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank"
+                                class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+
+                            </a></li>
+                        <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank"
+                                class="social-icon instagram">
+                                <i class="fab fa-instagram"></i>
+
+                            </a></li>
+                    </ul>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 VarnWear. All rights reserved.</p>
+                </div>
+            </div>
+    </footer>
+    <script src="js/api.js"></script>
+    <script src="js/toast.js"></script>
+
+    <script src="js/navbar.js"></script>
+
+    <script src="js/cart.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script>
+        // Check authentication
+        if (!requireAuth()) {
+            // Will redirect to login
+        }
+
+        // Load wishlist on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayWishlist();
+        });
+
+        // Display wishlist items
+        async function displayWishlist() {
+            const wishlist = await getWishlistWithDetails();
+            const emptyWishlist = document.getElementById('emptyWishlist');
+            const wishlistGrid = document.getElementById('wishlistGrid');
+
+            if (wishlist.length === 0) {
+                emptyWishlist.style.display = 'block';
+                wishlistGrid.style.display = 'none';
+                return;
+            }
+
+            emptyWishlist.style.display = 'none';
+            wishlistGrid.style.display = 'grid';
+
+            // Render wishlist items
+            const wishlistHTML = [];
+            for (const product of wishlist) {
+                const mainImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/images/placeholder.jpg';
+                const inStock = product.stock > 0;
+
+                wishlistHTML.push(`
+                    <div class="card">
+                        <a href="product-detail.html?id=${product.id || product._id}">
+                            <img src="${mainImage}" alt="${product.name}" class="card-img" style="width: 100%; height: 250px; object-fit: cover;">
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title">${product.name}</h3>
+                            <p class="card-text">${product.category}</p>
+                            <p class="card-price">₹${product.price.toLocaleString()}</p>
+                            
+                            ${inStock ?
+                        `<p style="color: var(--success); font-size: 0.9rem; margin-bottom: 1rem;">In Stock</p>` :
+                        `<p style="color: var(--error); font-size: 0.9rem; margin-bottom: 1rem;">Out of Stock</p>`
+                    }
+                            
+                            <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+                                ${inStock ?
+                        `<button class="btn btn-primary btn-small" onclick="moveToCartHandler('${product.id || product._id}')">Move to Cart</button>` :
+                        `<button class="btn btn-primary btn-small" disabled>Out of Stock</button>`
+                    }
+                                <button class="btn btn-outline btn-small" onclick="removeFromWishlistHandler('${product.id || product._id}')">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            }
+
+            wishlistGrid.innerHTML = wishlistHTML.join('');
+        }
+
+        // Move to cart handler
+        async function moveToCartHandler(productId) {
+            const result = await moveToCart(productId);
+            if (result) {
+                showToast('Product moved to cart!', 'success');
+                displayWishlist();
+                updateCartCount();
+            }
+        }
+
+        // Remove from wishlist handler
+        function removeFromWishlistHandler(productId) {
+            showConfirmModal(
+                'Remove from Wishlist',
+                'Remove this item from wishlist?',
+                () => {
+                    removeFromWishlist(productId);
+                    displayWishlist();
+                    showToast('Removed from wishlist', 'info');
+                }
+            );
+        }
+    </script>
+</body>
+
+</html>

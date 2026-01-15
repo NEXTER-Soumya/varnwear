@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .contact-hero {
+            background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .contact-hero h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-container {
+            padding: 4rem 0;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .contact-info-card {
+            background: var(--gray-light);
+            padding: 2rem;
+            border-left: 4px solid var(--gold);
+        }
+        .contact-info-card h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        .contact-info-card p {
+            margin-bottom: 0.5rem;
+            color: var(--gray-dark);
+        }
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="navbar-brand">VarnWear</a>
+        <ul class="navbar-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="collections.html">Collections</a></li>
+        </ul>
+        <div class="navbar-right">
+          <a href="login.html" class="btn btn-primary btn-small" id="loginBtn"
+            >Login</a
+          >
+          <div class="navbar-user" id="userSection" style="display: none">
+            <div class="dropdown">
+              <div class="profile-icon" id="profileIcon">
+                <img
+                  id="profileImg"
+                  src=""
+                  alt="Profile"
+                  style="display: none"
+                />
+                <span id="profileInitials"></span>
+              </div>
+              <div class="dropdown-menu" id="profileDropdown">
+                <a href="profile.html" class="dropdown-item">Profile</a>
+                <a href="orders.html" class="dropdown-item">Orders</a>
+                <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                <a href="contact.html" class="dropdown-item">Contact Us</a>
+                <a href="about.html" class="dropdown-item">About Us</a>
+                <a href="faq.html" class="dropdown-item">FAQ</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+              </div>
+            </div>
+            <a href="cart.html" class="cart-icon">
+              <span class="icon">🛒</span>
+              <span class="badge" id="cartCount">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="contact-hero">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            <p>We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <section class="contact-container container">
+        <div class="contact-grid">
+            <div>
+                <h2 class="mb-3">Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <input type="text" class="form-input" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-textarea" id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+
+            <div>
+                <h2 class="mb-3">Contact Information</h2>
+                <div class="contact-info-card mb-3">
+                    <h3>📍 Address</h3>
+                    <p>Durgapur, Budge Budge</p>
+                    <p>South 24 Parganas, West Bengal 743318</p>
+                    <p>India</p>
+                </div>
+                <div class="contact-info-card mb-3">
+                    <h3>📞 Phone</h3>
+                    <p>+91 91633 56190</p>
+                    <p>Mon-Sat: 10:00 AM - 7:00 PM</p>
+                </div>
+                <div class="contact-info-card mb-3">
+                    <h3>✉️ Email</h3>
+                    <p>support@varnwear.com</p>
+                    <p>csbiswassoumya@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VarnWear</h3>
+          <p>📍 South 24 Parganas, West Bengal 700139</p>
+          <p>📞 +91 98765 43210</p>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+              width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Links</h3>
+          <ul style="display: flex; gap: 10px;">
+            <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i>
+              </a></li>
+            <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank" class="social-icon facebook">
+                <i class="fab fa-facebook-f"></i>
+
+              </a></li>
+            <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank" class="social-icon instagram">
+                <i class="fab fa-instagram"></i>
+
+              </a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 VarnWear. All rights reserved.</p>
+        </div>
+      </div>
+  </footer>
+
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, subject, message })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Message sent! Check your email for confirmation.', 'success');
+                    e.target.reset();
+                } else {
+                    showToast('Failed to send message. Please try again.', 'error');
+                }
+            } catch (err) {
+                showToast('Error sending message. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            }
+        });
+    </script>
+</body>
+</html>

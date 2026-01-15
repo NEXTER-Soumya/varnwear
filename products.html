@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products - VarnWear</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/user.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    /* PRODUCT CARD BASE */
+    .product-card-hover {
+      position: relative;
+      height: 380px;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #000;
+    }
+
+    /* FULL BACKGROUND IMAGE */
+    .product-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    /* ZOOM IMAGE SLIGHTLY ON HOVER */
+    .product-card-hover:hover .product-bg-img {
+      transform: scale(1.08);
+    }
+
+    /* OVERLAY CONTENT */
+    .product-hover-content {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+          rgba(0, 0, 0, 0.75),
+          rgba(0, 0, 0, 0.2),
+          transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem;
+
+      /* animation state */
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all 0.45s ease;
+    }
+
+    /* SHOW ON HOVER */
+    .product-card-hover:hover .product-hover-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* TEXT STYLES */
+    .product-title {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .product-desc {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* PRICE + BUTTON */
+    .product-hover-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .out-of-stock {
+      color: #ff6b6b;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-brand">VarnWear</a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="collections.html">Collections</a></li>
+      </ul>
+      <div class="navbar-right">
+        <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+        <div class="navbar-user" id="userSection" style="display: none">
+          <div class="dropdown">
+            <div class="profile-icon" id="profileIcon">
+              <img id="profileImg" src="" alt="Profile" style="display: none" />
+              <span id="profileInitials"></span>
+            </div>
+            <div class="dropdown-menu" id="profileDropdown">
+              <a href="profile.html" class="dropdown-item">Profile</a>
+              <a href="orders.html" class="dropdown-item">Orders</a>
+              <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+              <a href="contact.html" class="dropdown-item">Contact Us</a>
+              <a href="about.html" class="dropdown-item">About Us</a>
+              <a href="faq.html" class="dropdown-item">FAQ</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+            </div>
+          </div>
+          <a href="cart.html" class="cart-icon">
+            <span class="icon">🛒</span>
+            <span class="badge" id="cartCount">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Products Section -->
+  <div class="container" style="padding: 3rem 0">
+    <div class="products-header">
+      <h1>Our Collection</h1>
+      <div class="filters">
+        <div class="filter-group">
+          <label>Category</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Sort By</label>
+          <select class="form-select" id="sortFilter">
+            <option value="default">Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Search</label>
+          <input type="text" class="form-input" id="searchInput" placeholder="Search products..." />
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-4" id="productsGrid">
+      <!-- Products will be rendered here -->
+    </div>
+
+    <!-- No Products Message -->
+    <div id="noProducts" style="display: none; text-align: center; padding: 3rem">
+      <h2>No products found</h2>
+      <p style="color: var(--gray-dark)">Try adjusting your filters</p>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VarnWear</h3>
+          <p>📍 South 24 Parganas, West Bengal 700139</p>
+          <p>📞 +91 98765 43210</p>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+              width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Links</h3>
+          <ul style="display: flex; gap: 10px;">
+            <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i>
+              </a></li>
+            <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank" class="social-icon facebook">
+                <i class="fab fa-facebook-f"></i>
+
+              </a></li>
+            <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank" class="social-icon instagram">
+                <i class="fab fa-instagram"></i>
+
+              </a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 VarnWear. All rights reserved.</p>
+        </div>
+      </div>
+  </footer>
+  <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+
+  <script src="js/navbar.js"></script>
+
+  <script>
+    // Initialize products page
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadCategories();
+
+      // Check if category is in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get("category");
+      if (categoryParam) {
+        document.getElementById("categoryFilter").value = categoryParam;
+      }
+
+      displayProducts();
+
+      // Filter listeners
+      document
+        .getElementById("categoryFilter")
+        .addEventListener("change", displayProducts);
+      document
+        .getElementById("sortFilter")
+        .addEventListener("change", displayProducts);
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", displayProducts);
+    });
+
+    // Load categories into filter
+    async function loadCategories() {
+      const products = await getAllProducts();
+      const categories = [...new Set(products.map((p) => p.category))];
+      const categoryFilter = document.getElementById("categoryFilter");
+
+      categories.forEach((cat) => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categoryFilter.appendChild(option);
+      });
+    }
+
+    // Display products with filters
+    async function displayProducts() {
+      const products = await getAllProducts();
+      const category = document.getElementById("categoryFilter").value;
+      const sort = document.getElementById("sortFilter").value;
+      const search = document
+        .getElementById("searchInput")
+        .value.toLowerCase();
+
+      // Filter products
+      let filtered = products.filter((p) => {
+        const matchCategory = !category || p.category === category;
+        const matchSearch =
+          !search ||
+          p.name.toLowerCase().includes(search) ||
+          p.category.toLowerCase().includes(search);
+        return matchCategory && matchSearch;
+      });
+
+      // Sort products
+      if (sort === "price-low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === "price-high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      // Render products
+      const grid = document.getElementById("productsGrid");
+      const noProducts = document.getElementById("noProducts");
+
+      if (filtered.length === 0) {
+        grid.style.display = "none";
+        noProducts.style.display = "block";
+      } else {
+        grid.style.display = "grid";
+        noProducts.style.display = "none";
+        grid.innerHTML = filtered
+          .map((product) => createProductCard(product))
+          .join("");
+      }
+    }
+
+    // Create product card HTML
+    function createProductCard(product) {
+      const inStock = product.stock > 0;
+      const mainImage =
+        product.images && product.images.length > 0
+          ? product.images[0]
+          : "assets/images/placeholder.jpg";
+
+      return `
+        <div class="product-card-hover"
+     onclick="openProductDetail('${product.id}')">
+
+    <img src="${mainImage}"
+         alt="${product.name}"
+         class="product-bg-img">
+
+    <div class="product-hover-content">
+        <h3 class="product-title">${product.name}</h3>
+        <p class="product-desc">${product.category}</p>
+
+        <div class="product-hover-bottom">
+            <span class="product-price">₹${product.price.toLocaleString()}</span>
+
+            ${inStock
+          ? `<button class="btn btn-primary btn-small"
+                         onclick="addToCartFromCard('${product.id}', event)">
+                     Add to Cart
+                 </button>`
+          : `<span class="out-of-stock">Out of Stock</span>`
+        }
+        </div>
+    </div>
+</div>
+
+        `;
+    }
+
+    // Toggle wishlist
+    function toggleWishlist(productId, event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!requireAuthForWishlist()) return;
+
+      if (isInWishlist(productId)) {
+        removeFromWishlist(productId);
+      } else {
+        addToWishlist(productId);
+      }
+
+      displayProducts();
+    }
+
+    // Check if product is in wishlist
+    function isInWishlist(productId) {
+      const user = getCurrentUser();
+      if (!user) return false;
+
+      const wishlist =
+        JSON.parse(localStorage.getItem(`wishlist_${user.id}`)) || [];
+      return wishlist.includes(productId);
+    }
+    function openProductDetail(productId) {
+      window.location.href = `product-detail.html?id=${productId}`;
+    }
+
+    function addToCartFromCard(productId, event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (!guardCartAction()) return;
+
+      addToCart(productId, 1).then(result => {
+        if (result) {
+          showToast('Added to cart!', 'success');
+          updateCartCount();
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

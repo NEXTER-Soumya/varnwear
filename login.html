@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            <div class="navbar-right">
+                <a href="register.html" class="btn btn-primary btn-small">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1 class="text-center mb-3">Welcome Back</h1>
+            <p class="text-center mb-4" style="color: var(--gray-dark);">Login to your VarnWear account</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="email" required>
+                    <span class="form-error" id="emailError"></span>
+                </div>
+
+                <div class="form-group" id="otpGroup" style="display: none;">
+                    <label class="form-label">Enter OTP</label>
+                    <input type="text" class="form-input" id="otp" maxlength="6" placeholder="6-digit OTP">
+                    <span class="form-error" id="otpError"></span>
+                    <small style="color: var(--gray-dark);">OTP sent to your email</small>
+                </div>
+
+                <div id="alertBox"></div>
+
+                <button type="button" class="btn btn-primary btn-large" id="sendOtpBtn" style="width: 100%;">Send OTP</button>
+                <button type="submit" class="btn btn-primary btn-large" id="loginBtn" style="width: 100%; display: none;">Login</button>
+            </form>
+
+            <p class="text-center mt-3">
+                Don't have an account? <a href="register.html" class="text-gold" style="font-weight: 600;">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/access-control.js"></script>
+    <script>
+        // Initialize access control
+        document.addEventListener('DOMContentLoaded', () => {
+            initAccessControl();
+            
+            // Attach event listener after DOM is loaded
+            const sendOtpBtn = document.getElementById('sendOtpBtn');
+            if (sendOtpBtn) {
+                sendOtpBtn.addEventListener('click', sendOTP);
+            }
+        });
+        
+        let userEmail = null;
+        
+        // Send OTP function
+        async function sendOTP() {
+            const email = document.getElementById('email').value.trim();
+            clearErrors();
+            
+            if (!email) {
+                showError('emailError', 'Email is required');
+                return;
+            }
+            
+            try {
+                const checkRes = await fetch('http://localhost:3000/api/users/check-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const checkData = await checkRes.json();
+                
+                if (!checkData.exists) {
+                    showError('emailError', 'Email not registered');
+                    return;
+                }
+                
+                const otpRes = await fetch('http://localhost:3000/api/users/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, type: 'login' })
+                });
+                const otpData = await otpRes.json();
+                
+                if (otpData.success) {
+                    userEmail = email;
+                    document.getElementById('otpGroup').style.display = 'block';
+                    document.getElementById('sendOtpBtn').style.display = 'none';
+                    document.getElementById('loginBtn').style.display = 'block';
+                    showAlert('OTP sent to your email', 'success');
+                } else {
+                    showError('emailError', otpData.message);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                showError('emailError', 'Error sending OTP. Check if server is running.');
+            }
+        }
+        
+        // Handle login form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const otp = document.getElementById('otp').value.trim();
+            clearErrors();
+            
+            if (!otp) {
+                showError('otpError', 'OTP is required');
+                return;
+            }
+            
+            try {
+                const verifyRes = await fetch(`${API_URL}/users/verify-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, otp })
+                });
+                const verifyData = await verifyRes.json();
+                
+                if (!verifyData.success) {
+                    showError('otpError', verifyData.message);
+                    return;
+                }
+                
+                const result = await loginUser(userEmail, 'otp-verified');
+                
+                if (result.success) {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirect = urlParams.get('redirect') || 'index.html';
+                    
+                    setTimeout(() => {
+                        window.location.replace(redirect);
+                    }, 1000);
+                } else {
+                    showAlert(result.message, 'error');
+                }
+            } catch (err) {
+                showError('otpError', 'Error verifying OTP');
+            }
+        });
+        
+        // Helper functions
+        function clearErrors() {
+            document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+        }
+        
+        function showError(id, message) {
+            document.getElementById(id).textContent = message;
+        }
+        
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+        }
+    </script>
+</body>
+</html>

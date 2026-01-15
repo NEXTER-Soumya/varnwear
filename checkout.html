@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - VarnWear</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">VarnWear</a>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="collections.html">Collections</a></li>
+            </ul>
+            <div class="navbar-right">
+                <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+                <div class="navbar-user" id="userSection" style="display: none;">
+                    <div class="dropdown">
+                        <div class="profile-icon" id="profileIcon">
+                            <img id="profileImg" src="" alt="Profile" style="display: none;">
+                            <span id="profileInitials"></span>
+                        </div>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <a href="profile.html" class="dropdown-item">Profile</a>
+                            <a href="orders.html" class="dropdown-item">Orders</a>
+                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+                            <a href="contact.html" class="dropdown-item">Contact Us</a>
+                            <a href="about.html" class="dropdown-item">About Us</a>
+                            <a href="faq.html" class="dropdown-item">FAQ</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+                        </div>
+                    </div>
+                    <a href="cart.html" class="cart-icon">
+                        <span class="icon">🛒</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Section -->
+    <div class="container checkout-container">
+        <h1 class="mb-4">Checkout</h1>
+
+        <div class="checkout-grid">
+            <!-- Left: Shipping & Payment -->
+            <div>
+                <!-- Shipping Address -->
+                <div class="checkout-section">
+                    <h2>Shipping Address</h2>
+                    <div class="mb-3">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="useDifferentAddress" onchange="toggleAddressForm()">
+                            <span>Use a different address</span>
+                        </label>
+                    </div>
+                    <div id="defaultAddressDisplay" style="background: var(--gray-light); padding: 1rem; border-radius: 4px; display: none;">
+                        <p id="defaultAddressText"></p>
+                    </div>
+                    <form id="checkoutForm" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" id="fullName" required>
+                            <span class="form-error" id="fullNameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" required>
+                            <span class="form-error" id="phoneError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-textarea" id="address" required></textarea>
+                            <span class="form-error" id="addressError"></span>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-input" id="city" required>
+                                <span class="form-error" id="cityError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" class="form-input" id="state" required>
+                                <span class="form-error" id="stateError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">PIN Code</label>
+                            <input type="text" class="form-input" id="pinCode" required maxlength="6">
+                            <span class="form-error" id="pinCodeError"></span>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="checkout-section">
+                    <h2>Payment Method</h2>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="UPI" checked>
+                            <span class="payment-label">
+                                <strong>UPI</strong>
+                                <small>Pay using UPI apps</small>
+                            </span>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="COD">
+                            <span class="payment-label">
+                                <strong>Cash on Delivery</strong>
+                                <small>Pay when you receive</small>
+                            </span>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Debit Card">
+                            <span class="payment-label">
+                                <strong>Debit Card</strong>
+                                <small>Visa, Mastercard, RuPay</small>
+                            </span>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Credit Card">
+                            <span class="payment-label">
+                                <strong>Credit Card</strong>
+                                <small>Visa, Mastercard, Amex</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div>
+                <div class="checkout-section">
+                    <h2>Order Summary</h2>
+                    <div id="orderItems" class="mb-3">
+                        <!-- Order items will be rendered here -->
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="shipping">₹0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">₹0</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-large mt-3" style="width: 100%;" onclick="placeOrder()">
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content" style="text-align: center;">
+            <div style="font-size: 4rem; color: var(--gold); margin-bottom: 1rem;">✓</div>
+            <h2>Order Placed Successfully!</h2>
+            <p style="color: var(--gray-dark); margin-top: 1rem;">Redirecting to orders page...</p>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>VarnWear</h3>
+          <p>📍 South 24 Parganas, West Bengal 700139</p>
+          <p>📞 +91 98765 43210</p>
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14749.58389182888!2d88.13881518152233!3d22.451749504620924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a028797d22b3259%3A0x46cbffd9f0309f7e!2sDurgapur%2C%20West%20Bengal%20743318!5e0!3m2!1sen!2sin!4v1768406250026!5m2!1sen!2sin"
+              width="400" height="300" style="border: 0" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Account</h3>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Social Links</h3>
+          <ul style="display: flex; gap: 10px;">
+            <li><a href="https://x.com/nexter_Sou" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i>
+              </a></li>
+            <li><a href="https://www.facebook.com/soumya.biswas.940098" target="_blank" class="social-icon facebook">
+                <i class="fab fa-facebook-f"></i>
+
+              </a></li>
+            <li><a href="https://www.instagram.com/soumyabrata__biswas" target="_blank" class="social-icon instagram">
+                <i class="fab fa-instagram"></i>
+
+              </a></li>
+          </ul>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 VarnWear. All rights reserved.</p>
+        </div>
+      </div>
+  </footer>
+    <script src="js/api.js"></script>
+  <script src="js/toast.js"></script>
+    
+    <script src="js/navbar.js"></script>
+    
+    <script src="js/cart.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/orders.js"></script>
+    <script>
+        // Check if cart is empty
+        document.addEventListener('DOMContentLoaded', async () => {
+            const cart = await getCartWithDetails();
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                window.location.href = 'products.html';
+                return;
+            }
+            displayOrderSummary();
+            loadUserData();
+        });
+
+        // Display order summary
+        async function displayOrderSummary() {
+            const cart = await getCartWithDetails();
+            const orderItems = document.getElementById('orderItems');
+
+            orderItems.innerHTML = cart.map(item => {
+                const product = item.product;
+                return `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-medium);">
+                        <div>
+                            <strong>${product.name}</strong>
+                            ${item.size ? `<br><small>Size: ${item.size}</small>` : ''}
+                            <br><small>Qty: ${item.quantity}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <strong>₹${(product.price * item.quantity).toLocaleString()}</strong>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Calculate totals
+            const subtotal = await getCartTotal();
+            const shipping = subtotal >= 2000 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            document.getElementById('subtotal').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `₹${shipping}`;
+            document.getElementById('total').textContent = `₹${total.toLocaleString()}`;
+        }
+
+        // Load user data
+        function loadUserData() {
+            const user = getCurrentUser();
+            if (user) {
+                document.getElementById('fullName').value = `${user.firstName} ${user.lastName}`;
+                
+                if (user.address && user.address.street) {
+                    const addr = user.address;
+                    const addressText = `${user.firstName} ${user.lastName}<br>${user.phone || ''}<br>${addr.street}, ${addr.city}, ${addr.state} - ${addr.pincode}`;
+                    document.getElementById('defaultAddressText').innerHTML = addressText;
+                    document.getElementById('defaultAddressDisplay').style.display = 'block';
+                } else {
+                    document.getElementById('checkoutForm').style.display = 'block';
+                    document.getElementById('useDifferentAddress').checked = true;
+                }
+            }
+        }
+
+        function toggleAddressForm() {
+            const checked = document.getElementById('useDifferentAddress').checked;
+            document.getElementById('checkoutForm').style.display = checked ? 'block' : 'none';
+            document.getElementById('defaultAddressDisplay').style.display = checked ? 'none' : 'block';
+        }
+
+        // Place order
+        async function placeOrder() {
+            const user = getCurrentUser();
+            const useDifferent = document.getElementById('useDifferentAddress').checked;
+            
+            let shippingAddress;
+            
+            if (!useDifferent && user.address && user.address.street) {
+                shippingAddress = {
+                    fullName: `${user.firstName} ${user.lastName}`,
+                    phone: user.phone || '',
+                    address: user.address.street,
+                    city: user.address.city,
+                    state: user.address.state,
+                    pinCode: user.address.pincode
+                };
+            } else {
+                clearErrors();
+                
+                const fullName = document.getElementById('fullName').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const city = document.getElementById('city').value.trim();
+                const state = document.getElementById('state').value.trim();
+                const pinCode = document.getElementById('pinCode').value.trim();
+                
+                let isValid = true;
+                
+                if (!fullName) {
+                    showError('fullNameError', 'Full name is required');
+                    isValid = false;
+                }
+                
+                if (!phone || !validatePhone(phone)) {
+                    showError('phoneError', 'Valid 10-digit phone number required');
+                    isValid = false;
+                }
+                
+                if (!address) {
+                    showError('addressError', 'Address is required');
+                    isValid = false;
+                }
+                
+                if (!city) {
+                    showError('cityError', 'City is required');
+                    isValid = false;
+                }
+                
+                if (!state) {
+                    showError('stateError', 'State is required');
+                    isValid = false;
+                }
+                
+                if (!pinCode || !validatePinCode(pinCode)) {
+                    showError('pinCodeError', 'Valid 6-digit PIN code required');
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                shippingAddress = { fullName, phone, address, city, state, pinCode };
+            }
+            
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const result = await createOrder(shippingAddress, paymentMethod);
+            
+            if (result.success) {
+                document.getElementById('successModal').classList.add('show');
+                setTimeout(() => {
+                    window.location.href = 'orders.html';
+                }, 2000);
+            } else {
+                alert(result.message || 'Failed to place order');
+            }
+        }
+
+        // Helper functions
+        function clearErrors() {
+            document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+        }
+
+        function showError(id, message) {
+            document.getElementById(id).textContent = message;
+        }
+    </script>
+</body>
+</html>
