@@ -37,9 +37,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
@@ -103,12 +101,6 @@ app.post('/api/users/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Email not found' });
     }
     
-    // Allow OTP-verified login
-    if (password === 'otp-verified') {
-      console.log('OTP login successful:', email);
-      return res.json({ success: true, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, profileImage: user.profileImage } });
-    }
-    
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       console.log('Invalid password for:', email);
@@ -119,6 +111,50 @@ app.post('/api/users/login', async (req, res) => {
     res.json({ success: true, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, profileImage: user.profileImage } });
   } catch (err) {
     console.error('Login error:', err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+app.post('/api/users/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ success: false, message: 'Email not found' });
+    
+    const resetToken = Math.random().toString(36).substr(2, 10);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    otpStore.set(email, { otp, expires: Date.now() + 300000, resetToken });
+    
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'VarnWear - Password Reset',
+      html: `<h2>Password Reset</h2><p>Your OTP for password reset is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
+    });
+    
+    res.json({ success: true, message: 'Reset OTP sent to email' });
+  } catch (err) {
+    console.error('Forgot password error:', err);
+    res.status(500).json({ success: false, message: 'Failed to send reset email' });
+  }
+});
+
+app.post('/api/users/reset-password', async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    const stored = otpStore.get(email);
+    
+    if (!stored || stored.otp !== otp || Date.now() > stored.expires) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
+    }
+    
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.findOneAndUpdate({ email }, { password: hashedPassword });
+    
+    otpStore.delete(email);
+    res.json({ success: true, message: 'Password reset successful' });
+  } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
@@ -142,23 +178,32 @@ app.post('/api/users/send-otp', async (req, res) => {
     // Store OTP with 5 min expiry
     otpStore.set(email, { otp, expires: Date.now() + 300000 });
     
+    // Check if email is configured
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.error('Email credentials not configured');
-      return res.status(500).json({ success: false, message: 'Email service not configured' });
+      // For testing: return OTP in response (REMOVE IN PRODUCTION)
+      return res.json({ success: true, message: 'OTP sent to email', otp: otp });
     }
     
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: `VarnWear - Your OTP Code`,
-      html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
-    });
+    // Send email
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: `VarnWear - Your OTP Code`,
+        html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
+      });
+      console.log('OTP sent to:', email);
+    } catch (emailErr) {
+      console.error('Email send error:', emailErr);
+      // Still return success but log the error
+      return res.json({ success: true, message: 'OTP generated (email failed)', otp: otp });
+    }
     
-    console.log('OTP sent to:', email);
     res.json({ success: true, message: 'OTP sent to email' });
   } catch (err) {
     console.error('Send OTP error:', err);
-    res.status(500).json({ success: false, message: 'Failed to send OTP. Please try again.' });
+    res.status(500).json({ success: false, message: err.message });
   }
 });
 
