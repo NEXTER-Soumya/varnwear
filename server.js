@@ -115,44 +115,15 @@ app.post('/api/users/login', async (req, res) => {
   }
 });
 
-app.post('/api/users/forgot-password', async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ success: false, message: 'Email not found' });
-    
-    const resetToken = Math.random().toString(36).substr(2, 10);
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    
-    otpStore.set(email, { otp, expires: Date.now() + 300000, resetToken });
-    
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'VarnWear - Password Reset',
-      html: `<h2>Password Reset</h2><p>Your OTP for password reset is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
-    });
-    
-    res.json({ success: true, message: 'Reset OTP sent to email' });
-  } catch (err) {
-    console.error('Forgot password error:', err);
-    res.status(500).json({ success: false, message: 'Failed to send reset email' });
-  }
-});
-
 app.post('/api/users/reset-password', async (req, res) => {
   try {
-    const { email, otp, newPassword } = req.body;
-    const stored = otpStore.get(email);
-    
-    if (!stored || stored.otp !== otp || Date.now() > stored.expires) {
-      return res.status(400).json({ success: false, message: 'Invalid or expired OTP' });
-    }
+    const { email, newPassword } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ success: false, message: 'Email not found' });
     
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await User.findOneAndUpdate({ email }, { password: hashedPassword });
     
-    otpStore.delete(email);
     res.json({ success: true, message: 'Password reset successful' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
