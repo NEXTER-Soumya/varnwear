@@ -82,20 +82,46 @@
             const email = prompt('Enter your email address:');
             if (!email) return;
             
-            fetch(`${API_URL}/users/forgot-password`, {
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({
+                    access_key: '9f7d0786-7e8a-49e3-bb00-cfd3fc66d1f9',
+                    subject: 'VarnWear - Password Reset OTP',
+                    from_name: 'VarnWear',
+                    to: email,
+                    message: `Your OTP for password reset is: ${otp}. Valid for 5 minutes.`
+                })
             })
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    alert('Password reset link sent to your email');
+                    const newPassword = prompt(`OTP sent to ${email}. Enter the OTP:`);
+                    if (newPassword) {
+                        if (newPassword === otp) {
+                            const resetPassword = prompt('Enter new password (min 6 characters):');
+                            if (resetPassword && resetPassword.length >= 6) {
+                                fetch(`${API_URL}/users/reset-password`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ email, newPassword: resetPassword })
+                                })
+                                .then(r => r.json())
+                                .then(d => alert(d.success ? 'Password reset successful!' : d.message));
+                            } else {
+                                alert('Password must be at least 6 characters');
+                            }
+                        } else {
+                            alert('Invalid OTP');
+                        }
+                    }
                 } else {
-                    alert(data.message);
+                    alert('Failed to send OTP');
                 }
             })
-            .catch(() => alert('Error sending reset link'));
+            .catch(() => alert('Error sending OTP'));
         }
         
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
