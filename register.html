@@ -98,6 +98,7 @@
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
+            const btn = document.getElementById('sendOtpBtn');
             
             clearErrors();
             
@@ -113,6 +114,9 @@
                 showError('emailError', 'Valid email is required');
                 return;
             }
+            
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
             
             try {
                 const apiUrl = typeof API_URL !== 'undefined' ? API_URL : `${window.location.origin}/api`;
@@ -139,20 +143,16 @@
                     document.getElementById('otpGroup').style.display = 'block';
                     document.getElementById('sendOtpBtn').style.display = 'none';
                     document.getElementById('signupBtn').style.display = 'block';
-                    
-                    // Show OTP in console for testing if email failed
-                    if (otpData.otp) {
-                        console.log('🔐 OTP for testing:', otpData.otp);
-                        showAlert(`OTP sent! Check console for testing (OTP: ${otpData.otp})`, 'success');
-                    } else {
-                        showAlert('OTP sent to your email', 'success');
-                    }
+                    showAlert('OTP sent to your email', 'success');
                 } else {
                     showError('emailError', otpData.message);
                 }
             } catch (err) {
                 console.error('Error:', err);
                 showError('emailError', 'Error sending OTP. Check if server is running.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Send OTP';
             }
         }
         

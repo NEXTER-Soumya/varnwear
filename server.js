@@ -37,7 +37,9 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // Email transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
@@ -140,32 +142,23 @@ app.post('/api/users/send-otp', async (req, res) => {
     // Store OTP with 5 min expiry
     otpStore.set(email, { otp, expires: Date.now() + 300000 });
     
-    // Check if email is configured
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.error('Email credentials not configured');
-      // For testing: return OTP in response (REMOVE IN PRODUCTION)
-      return res.json({ success: true, message: 'OTP sent to email', otp: otp });
+      return res.status(500).json({ success: false, message: 'Email service not configured' });
     }
     
-    // Send email
-    try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: `VarnWear - Your OTP Code`,
-        html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
-      });
-      console.log('OTP sent to:', email);
-    } catch (emailErr) {
-      console.error('Email send error:', emailErr);
-      // Still return success but log the error
-      return res.json({ success: true, message: 'OTP generated (email failed)', otp: otp });
-    }
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `VarnWear - Your OTP Code`,
+      html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
+    });
     
+    console.log('OTP sent to:', email);
     res.json({ success: true, message: 'OTP sent to email' });
   } catch (err) {
     console.error('Send OTP error:', err);
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: 'Failed to send OTP. Please try again.' });
   }
 });
 
