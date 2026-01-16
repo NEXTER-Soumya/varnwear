@@ -2,7 +2,20 @@
 // VarnWear - Admin Authentication
 // ========================================
 
-const ADMIN_API_URL = 'http://localhost:3000/api/admin';
+// Automatically detect API URL based on environment
+const ADMIN_API_URL = (() => {
+    const hostname = window.location.hostname;
+    
+    // Production (Render or any deployed site)
+    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+        return `${window.location.origin}/api/admin`;
+    }
+    
+    // Local development
+    return 'http://localhost:3000/api/admin';
+})();
+
+console.log('Admin API URL:', ADMIN_API_URL);
 
 // Admin login
 async function adminLogin(username, password) {

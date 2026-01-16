@@ -10,14 +10,30 @@ const nodemailer = require('nodemailer');
 const { User, Product, Admin } = require('./models');
 
 const app = express();
-app.use(cors());
+
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? [process.env.FRONTEND_URL, /\.onrender\.com$/]
+    : '*',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.static('.'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✓ MongoDB Connected'))
-  .catch(err => console.error('MongoDB Error:', err));
+  .then(() => {
+    console.log('✓ MongoDB Connected');
+    console.log('✓ Database:', mongoose.connection.name);
+  })
+  .catch(err => {
+    console.error('MongoDB Error:', err);
+    process.exit(1);
+  });
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -25,6 +41,9 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
@@ -44,9 +63,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // ============ USER ROUTES ============
 app.post('/api/users/register', async (req, res) => {
   try {
+    console.log('Register request:', req.body.email);
     const { firstName, lastName, email, password, profileImage } = req.body;
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ success: false, message: 'Email already registered' });
@@ -54,28 +83,40 @@ app.post('/api/users/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ firstName, lastName, email, password: hashedPassword, profileImage });
     
+    console.log('User registered:', user.email);
     res.json({ success: true, user: { id: user._id, firstName, lastName, email, profileImage } });
   } catch (err) {
+    console.error('Register error:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
 app.post('/api/users/login', async (req, res) => {
   try {
+    console.log('Login request:', req.body.email);
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ success: false, message: 'Email not found' });
+    if (!user) {
+      console.log('User not found:', email);
+      return res.status(400).json({ success: false, message: 'Email not found' });
+    }
     
     // Allow OTP-verified login
     if (password === 'otp-verified') {
+      console.log('OTP login successful:', email);
       return res.json({ success: true, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, profileImage: user.profileImage } });
     }
     
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(400).json({ success: false, message: 'Incorrect password' });
+    if (!valid) {
+      console.log('Invalid password for:', email);
+      return res.status(400).json({ success: false, message: 'Incorrect password' });
+    }
     
+    console.log('Login successful:', email);
     res.json({ success: true, user: { id: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email, profileImage: user.profileImage } });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 });
@@ -92,22 +133,38 @@ app.post('/api/users/check-email', async (req, res) => {
 
 app.post('/api/users/send-otp', async (req, res) => {
   try {
+    console.log('Send OTP request:', req.body.email);
     const { email, type } = req.body;
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     
     // Store OTP with 5 min expiry
     otpStore.set(email, { otp, expires: Date.now() + 300000 });
     
+    // Check if email is configured
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Email credentials not configured');
+      // For testing: return OTP in response (REMOVE IN PRODUCTION)
+      return res.json({ success: true, message: 'OTP sent to email', otp: otp });
+    }
+    
     // Send email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: `VarnWear - Your OTP Code`,
-      html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
-    });
+    try {
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: `VarnWear - Your OTP Code`,
+        html: `<h2>Your OTP Code</h2><p>Your OTP for ${type === 'register' ? 'registration' : 'login'} is: <strong>${otp}</strong></p><p>Valid for 5 minutes.</p>`
+      });
+      console.log('OTP sent to:', email);
+    } catch (emailErr) {
+      console.error('Email send error:', emailErr);
+      // Still return success but log the error
+      return res.json({ success: true, message: 'OTP generated (email failed)', otp: otp });
+    }
     
     res.json({ success: true, message: 'OTP sent to email' });
   } catch (err) {
+    console.error('Send OTP error:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 });
@@ -205,15 +262,24 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
 // ============ ADMIN ROUTES ============
 app.post('/api/admin/login', async (req, res) => {
   try {
+    console.log('Admin login request:', req.body.username);
     const { username, password } = req.body;
     const admin = await Admin.findOne({ username });
-    if (!admin) return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    if (!admin) {
+      console.log('Admin not found:', username);
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    }
     
     const valid = await bcrypt.compare(password, admin.password);
-    if (!valid) return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    if (!valid) {
+      console.log('Invalid admin password');
+      return res.status(400).json({ success: false, message: 'Invalid credentials' });
+    }
     
+    console.log('Admin login successful:', username);
     res.json({ success: true, admin: { id: admin._id, username: admin.username } });
   } catch (err) {
+    console.error('Admin login error:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 });

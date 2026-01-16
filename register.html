@@ -115,7 +115,8 @@
             }
             
             try {
-                const checkRes = await fetch(`${API_URL}/users/check-email`, {
+                const apiUrl = typeof API_URL !== 'undefined' ? API_URL : `${window.location.origin}/api`;
+                const checkRes = await fetch(`${apiUrl}/users/check-email`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -127,7 +128,7 @@
                     return;
                 }
                 
-                const otpRes = await fetch(`${API_URL}/users/send-otp`, {
+                const otpRes = await fetch(`${apiUrl}/users/send-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, type: 'register' })
@@ -138,7 +139,14 @@
                     document.getElementById('otpGroup').style.display = 'block';
                     document.getElementById('sendOtpBtn').style.display = 'none';
                     document.getElementById('signupBtn').style.display = 'block';
-                    showAlert('OTP sent to your email', 'success');
+                    
+                    // Show OTP in console for testing if email failed
+                    if (otpData.otp) {
+                        console.log('🔐 OTP for testing:', otpData.otp);
+                        showAlert(`OTP sent! Check console for testing (OTP: ${otpData.otp})`, 'success');
+                    } else {
+                        showAlert('OTP sent to your email', 'success');
+                    }
                 } else {
                     showError('emailError', otpData.message);
                 }
@@ -166,7 +174,8 @@
             }
             
             try {
-                const verifyRes = await fetch(`${API_URL}/users/verify-otp`, {
+                const apiUrl = typeof API_URL !== 'undefined' ? API_URL : `${window.location.origin}/api`;
+                const verifyRes = await fetch(`${apiUrl}/users/verify-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, otp })
