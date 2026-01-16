@@ -2,7 +2,18 @@
 // VarnWear - API Client (MongoDB Backend)
 // ========================================
 
-const API_URL = 'http://localhost:3000/api';
+// Automatically detect API URL based on environment
+const API_URL = (() => {
+    const hostname = window.location.hostname;
+    
+    // Production (Render or any deployed site)
+    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+        return `${window.location.origin}/api`;
+    }
+    
+    // Local development
+    return 'http://localhost:3000/api';
+})();
 
 // ============ USER API ============
 async function registerUser(firstName, lastName, email, password, profileImage = null) {

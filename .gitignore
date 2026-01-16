@@ -1,4 +1,7 @@
 node_modules/
 .env
-package-lock.json
 *.log
+.DS_Store
+assets/images/*.jpg
+assets/images/*.png
+!assets/images/placeholder.jpg

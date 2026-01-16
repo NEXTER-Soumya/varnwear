@@ -204,6 +204,7 @@
       </div>
   </footer>
 
+    <script src="js/api.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/navbar.js"></script>
@@ -221,7 +222,7 @@
             submitBtn.textContent = 'Sending...';
             
             try {
-                const response = await fetch('http://localhost:3000/api/contact', {
+                const response = await fetch(`${API_URL}/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, subject, message })

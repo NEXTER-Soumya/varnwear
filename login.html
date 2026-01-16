@@ -86,7 +86,7 @@
             }
             
             try {
-                const checkRes = await fetch('http://localhost:3000/api/users/check-email', {
+                const checkRes = await fetch(`${API_URL}/users/check-email`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -98,7 +98,7 @@
                     return;
                 }
                 
-                const otpRes = await fetch('http://localhost:3000/api/users/send-otp', {
+                const otpRes = await fetch(`${API_URL}/users/send-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, type: 'login' })
