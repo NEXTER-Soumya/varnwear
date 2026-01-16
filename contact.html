@@ -107,21 +107,22 @@
             <div>
                 <h2 class="mb-3">Send Us a Message</h2>
                 <form id="contactForm">
+                    <input type="hidden" name="access_key" value="9f7d0786-7e8a-49e3-bb00-cfd3fc66d1f9">
                     <div class="form-group">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-input" id="name" required>
+                        <input type="text" class="form-input" name="name" id="name" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="email" required>
+                        <input type="email" class="form-input" name="email" id="email" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Subject</label>
-                        <input type="text" class="form-input" id="subject" required>
+                        <input type="text" class="form-input" name="subject" id="subject" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Message</label>
-                        <textarea class="form-textarea" id="message" rows="5" required></textarea>
+                        <textarea class="form-textarea" name="message" id="message" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
@@ -204,7 +205,6 @@
       </div>
   </footer>
 
-    <script src="js/api.js"></script>
     <script src="js/toast.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/navbar.js"></script>
@@ -212,27 +212,21 @@
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             
             try {
-                const apiUrl = typeof API_URL !== 'undefined' ? API_URL : `${window.location.origin}/api`;
-                const response = await fetch(`${apiUrl}/contact`, {
+                const formData = new FormData(e.target);
+                const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, subject, message })
+                    body: formData
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    showToast('Message sent! Check your email for confirmation.', 'success');
+                    showToast('Message sent successfully!', 'success');
                     e.target.reset();
                 } else {
                     showToast('Failed to send message. Please try again.', 'error');
