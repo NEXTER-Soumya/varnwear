@@ -14,7 +14,6 @@
 .auth-box {
     background: var(--white);
     border: 2px solid var(--gray-medium);
-    border-radius: 16px;
     padding: 3rem;
     max-width: 500px;
     width: 100%;
@@ -30,7 +29,6 @@
 .image-preview img {
     width: 120px;
     height: 120px;
-    border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--gold);
 }

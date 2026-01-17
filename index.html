@@ -181,18 +181,30 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
+      <!--
       <h1>Premium Fashion Collection</h1>
-      <p>Discover exclusive designs with golden elegance</p>
-      <a href="products.html" class="btn btn-primary btn-large">Shop Now</a>
+      <p>Discover exclusive designs with golden elegance</p>-->
+      <a href="products.html" class="btn btn-primary btn-large shop-now">SHOP NOW</a>
     </div>
   </section>
 
   <!-- Featured Products -->
-  <section class="container" style="padding: 4rem 0">
-    <h2 class="text-center mb-4">Featured Products</h2>
-    <div class="grid grid-4" id="featuredProducts">
-      <!-- Products will be loaded here -->
+<section class="container" style="padding: 4rem 0">
+  <div class="flex-between mb-4">
+    <h2>Featured Products</h2>
+    <a href="products.html" class="btn btn-gold-outline btn-small" style="color: black;border: 1px solid black;">VIEW ALL</a>
+  </div>
+  <div class="grid grid-4" id="featuredProducts">
+    <!-- Products will be loaded here -->
+  </div>
+</section>
+
+  <!--Thin Banner-->
+  <section class="thin-banner">
+    <div class="container">
+      <a href="collections.html" class="btn btn-primary btn-large shop-now">COLLECTION</a>
     </div>
+
   </section>
 
   <!-- Footer -->
@@ -338,64 +350,119 @@
         }
       });
     }
+    const hero = document.querySelector('.hero');
+    const thinBanner = document.querySelector('.thin-banner');
+
+    const images = [
+      '/assets/stocks/image1.jpg',
+      '/assets/stocks/image2.jpg',
+      '/assets/stocks/image3.jpg',
+    ];
+    const stocks = [
+      '/assets/stocks/image4.jpg',
+      '/assets/stocks/image5.jpg',
+      '/assets/stocks/image6.jpg',
+    ];
+    let currentIndex = 0;
+    let stockIndex = 0;
+
+    // Initial image
+    hero.style.backgroundImage = `url(${images[currentIndex]})`;
+    thinBanner.style.backgroundImage = `url('${stocks[stockIndex]}')`;
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % images.length;
+
+      hero.style.backgroundImage = `url(${images[currentIndex]})`;
+
+    }, 4000); // change every 4 seconds
+    setInterval(() => {
+
+      stockIndex = (stockIndex + 1) % stocks.length;
+
+      thinBanner.style.backgroundImage = `url('${stocks[stockIndex]}')`;
+    }, 4000);
+
   </script>
 
   <style>
     .hero {
-      background: linear-gradient(135deg,
-          var(--black) 0%,
-          var(--gray-dark) 100%);
-      color: var(--white);
-      padding: 6rem 0;
-      text-align: center;
+      height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      transition: background-image 0.5s ease-in-out;
     }
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: var(--gold);
+    .thin-banner {
+      position: relative;
+      height: 50vh;
+
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center top;
+
+      transition: background-image 0.5s ease-in-out;
+      overflow: hidden;
     }
 
-    .hero p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
+    /* gradient overlay */
+    .thin-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: linear-gradient(rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15));
+
+      z-index: 1;
+      pointer-events: none;
     }
-    
+
+    /* content above everything */
+    .thin-banner .container {
+      position: absolute;
+      right: 5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+
+    @media (max-width: 768px) {
+      .thin-banner {
+        justify-content: center;
+        padding-right: 0;
+      }
+    }
+
+
+
     @media (max-width: 768px) {
       .hero {
         padding: 4rem 0;
       }
-      
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      .hero p {
-        font-size: 1.2rem;
-      }
     }
-    
+
     @media (max-width: 480px) {
       .hero {
         padding: 3rem 0;
       }
-      
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      
-      .hero p {
-        font-size: 1rem;
-      }
-      
+
       .product-card-hover {
         height: 300px;
       }
-      
+
       .product-title {
         font-size: 1rem;
       }
-      
+
       .product-desc {
         font-size: 0.85rem;
       }
