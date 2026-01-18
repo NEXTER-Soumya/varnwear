@@ -1,74 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - VarnWear</title>
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <style>
-        .about-hero {
-            background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
-            color: var(--white);
-            padding: 4rem 0;
-            text-align: center;
-        }
-        .about-hero h1 {
-            color: var(--gold);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .about-section {
-            padding: 4rem 0;
-        }
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .about-content h2 {
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-        .about-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--gray-dark);
-            margin-bottom: 1.5rem;
-        }
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .value-card {
-            background: var(--gray-light);
-            padding: 2rem;
-            text-align: center;
-            border-top: 4px solid var(--gold);
-        }
-        .value-card h3 {
-            color: var(--black);
-            margin: 1rem 0;
-        }
-        .value-icon {
-            font-size: 3rem;
-        }
-        @media (max-width: 768px) {
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .map {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - VarnWear</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    .about-hero {
+      background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+      color: var(--white);
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .about-hero h1 {
+      color: var(--gold);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-section {
+      padding: 4rem 0;
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-content h2 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .about-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--gray-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .values-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .value-card {
+      background: var(--gray-light);
+      padding: 2rem;
+      text-align: center;
+      border-top: 4px solid var(--gold);
+    }
+
+    .value-card h3,p {
+      color: var(--white);
+      margin: 1rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .map {
       margin-top: 5px;
       height: 200px;
       width: 250px;
-      
+
       overflow: hidden;
     }
 
@@ -79,7 +88,7 @@
       align-items: center;
       justify-content: center;
       background: rgba(255, 255, 255, 0.1);
-      
+
       font-size: 20px;
       transition: all 0.3s ease;
       border: 2px solid transparent;
@@ -105,90 +114,116 @@
       background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
       border-color: #e6683c;
     }
-    </style>
+  </style>
 </head>
+
 <body>
-    <nav class="navbar">
-      <div class="container">
-        <a href="index.html" class="navbar-brand">VarnWear</a>
-        <ul class="navbar-menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="collections.html">Collections</a></li>
-        </ul>
-        <div class="navbar-right">
-          <a href="login.html" class="btn btn-primary btn-small" id="loginBtn"
-            >Login</a
-          >
-          <div class="navbar-user" id="userSection" style="display: none">
-            <div class="dropdown">
-              <div class="profile-icon" id="profileIcon">
-                <img
-                  id="profileImg"
-                  src=""
-                  alt="Profile"
-                  style="display: none"
-                />
-                <span id="profileInitials"></span>
-              </div>
-              <div class="dropdown-menu" id="profileDropdown">
-                <a href="profile.html" class="dropdown-item">Profile</a>
-                <a href="orders.html" class="dropdown-item">Orders</a>
-                <a href="wishlist.html" class="dropdown-item">Wishlist</a>
-                <a href="contact.html" class="dropdown-item">Contact Us</a>
-                <a href="about.html" class="dropdown-item">About Us</a>
-                <a href="faq.html" class="dropdown-item">FAQ</a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
-              </div>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-brand">VarnWear</a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="collections.html">Collections</a></li>
+      </ul>
+      <div class="navbar-right">
+        <a href="login.html" class="btn btn-primary btn-small" id="loginBtn">Login</a>
+        <div class="navbar-user" id="userSection" style="display: none">
+          <div class="dropdown">
+            <div class="profile-icon" id="profileIcon">
+              <img id="profileImg" src="" alt="Profile" style="display: none" />
+              <span id="profileInitials"></span>
             </div>
-            <a href="cart.html" class="cart-icon">
-              <span class="icon">🛒</span>
-              <span class="badge" id="cartCount">0</span>
-            </a>
+            <div class="dropdown-menu" id="profileDropdown">
+              <a href="profile.html" class="dropdown-item">Profile</a>
+              <a href="orders.html" class="dropdown-item">Orders</a>
+              <a href="wishlist.html" class="dropdown-item">Wishlist</a>
+              <a href="contact.html" class="dropdown-item">Contact Us</a>
+              <a href="about.html" class="dropdown-item">About Us</a>
+              <a href="faq.html" class="dropdown-item">FAQ</a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="logoutBtn">LogOut</a>
+            </div>
           </div>
+          <a href="cart.html" class="cart-icon">
+            <span class="icon">🛒</span>
+            <span class="badge" id="cartCount">0</span>
+          </a>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <section class="about-hero">
-        <div class="container">
-            <h1>About VarnWear</h1>
-            <p>Where elegance meets excellence</p>
+  <section class="about-hero">
+    <div class="container">
+      <h1>About VarnWear</h1>
+      <p>Where elegance meets excellence</p>
+    </div>
+  </section>
+
+  <section class="about-section container">
+    <div class="about-content">
+      <h2>Our Story</h2>
+      <p>VarnWear was founded with a vision to bring premium fashion to those who appreciate the finer things in life.
+        Our name combines "Varn" (meaning color and elegance) with "Wear", symbolizing our commitment to delivering
+        fashion that's both vibrant and sophisticated.</p>
+
+      <p>Since our inception, we've been dedicated to curating collections that blend timeless elegance with
+        contemporary style. Each piece in our collection is carefully selected to ensure it meets our high standards of
+        quality and design.</p>
+
+      <h2 class="mt-4">Our Mission</h2>
+      <p>To provide our customers with exceptional fashion pieces that embody luxury, quality, and style. We believe
+        that everyone deserves to feel confident and elegant in what they wear.</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card" style="background: url('/assets/me/SB_1.jpeg');
+      background-size: cover;
+      background-position: center;">
+        <div class="value-icon" style="width:200px;
+      height: 200px;
+      background: none;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;;
+      margin: 0 auto;">
+
         </div>
-    </section>
+        <h3>Soumyabrata Biswas</h3>
+        <p>Data Analyst & Web Developer, GMIT</p>
+        <p style="display: flex;align-items: center;justify-content: center;gap: 10px;">
+          <a href="https://github.com/NEXTER-Soumya"
+            style="font-size: 30px; text-decoration: none;color: rgb(255, 255, 255);"><ion-icon name="logo-github"></ion-icon></a>
+          <a href="https://www.linkedin.com/in/soumyabiswas2003/"
+            style="font-size: 30px; text-decoration: none;color: #4267b2;"><ion-icon
+              name="logo-linkedin"></ion-icon></a>
+      </div>
+      <div class="value-card" style="background: url('/assets/me/SB_1.jpeg');
+      background-size: cover;
+      background-position: center;">
+        <div class="value-icon" style="width:200px;
+      height: 200px;
+      background: none;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;;
+      margin: 0 auto;">
 
-    <section class="about-section container">
-        <div class="about-content">
-            <h2>Our Story</h2>
-            <p>VarnWear was founded with a vision to bring premium fashion to those who appreciate the finer things in life. Our name combines "Varn" (meaning color and elegance) with "Wear", symbolizing our commitment to delivering fashion that's both vibrant and sophisticated.</p>
-            
-            <p>Since our inception, we've been dedicated to curating collections that blend timeless elegance with contemporary style. Each piece in our collection is carefully selected to ensure it meets our high standards of quality and design.</p>
-            
-            <h2 class="mt-4">Our Mission</h2>
-            <p>To provide our customers with exceptional fashion pieces that embody luxury, quality, and style. We believe that everyone deserves to feel confident and elegant in what they wear.</p>
         </div>
+        <h3>Dipendu Ghosal</h3>
+        <p>Data Analyst & Web Developer, GMIT</p>
+        <p style="display: flex;align-items: center;justify-content: center;gap: 10px;">
+          <a href="https://github.com/NEXTER-Soumya"
+            style="font-size: 30px; text-decoration: none;color: rgb(255, 255, 255);"><ion-icon name="logo-github"></ion-icon></a>
+          <a href="https://www.linkedin.com/in/soumyabiswas2003/"
+            style="font-size: 30px; text-decoration: none;color: #4267b2;"><ion-icon
+              name="logo-linkedin"></ion-icon></a>
+      </div>
+    </div>
+  </section>
 
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon">✨</div>
-                <h3>Quality</h3>
-                <p>Premium materials and craftsmanship in every piece</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">🎯</div>
-                <h3>Style</h3>
-                <p>Curated collections that define elegance</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon">💎</div>
-                <h3>Luxury</h3>
-                <p>Exclusive designs with golden elegance</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
@@ -242,7 +277,10 @@
         </div>
       </div>
   </footer>
-    <script src="js/auth.js"></script>
-    <script src="js/navbar.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/navbar.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

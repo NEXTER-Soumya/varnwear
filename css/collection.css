@@ -1,0 +1,51 @@
+.collection-blocks {
+    display: flex;
+    gap: 2rem;
+
+    position: relative;
+    height: 100vh;
+    /* visible area */
+    overflow: hidden;
+}
+
+.collection-slideshow {
+    height: fit-content;
+    /* full viewport height */
+    width: 468px;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* distribute letters top → bottom */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    padding: 20px 0;
+    /* small breathing space top & bottom */
+    transition: background-image 0.5s ease-in-out;
+}
+
+
+.collection-slideshow>div {
+    font-size: 3em;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px #ffc800;
+}
+
+.main-collection {
+    flex: 1;
+
+    height: 100%;
+    overflow-y: auto;
+    /* vertical scroll ONLY here */
+    padding-right: 1rem;
+
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Firefox */
+}
