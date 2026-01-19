@@ -4,12 +4,19 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const nodemailer = require('nodemailer');
 const { User, Product, Admin } = require('./models');
 
 const app = express();
+
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // CORS configuration for production
 const corsOptions = {
@@ -50,15 +57,12 @@ const transporter = nodemailer.createTransport({
 // Store OTPs temporarily
 const otpStore = new Map();
 
-// Image upload configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = './assets/images';
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+// Cloudinary storage configuration
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'varnwear',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif']
   }
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
@@ -265,7 +269,7 @@ app.delete('/api/products/:id', async (req, res) => {
 
 app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, message: 'No file uploaded' });
-  res.json({ success: true, path: `assets/images/${req.file.filename}` });
+  res.json({ success: true, path: req.file.path });
 });
 
 // ============ ADMIN ROUTES ============
