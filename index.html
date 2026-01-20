@@ -353,14 +353,14 @@
     const thinBanner = document.querySelector('.thin-banner');
 
     const images = [
-      '/assets/stocks/image1.jpg',
-      '/assets/stocks/image2.jpg',
-      '/assets/stocks/image3.jpg',
+      '/assets/stocks/image1.webp',
+      '/assets/stocks/image2.webp',
+      '/assets/stocks/image2.webp'
     ];
     const stocks = [
-      '/assets/stocks/image4.jpg',
-      '/assets/stocks/image5.jpg',
-      '/assets/stocks/image6.jpg',
+      '/assets/stocks/image4.webp',
+      '/assets/stocks/image5.webp',
+      '/assets/stocks/image6.webp',
     ];
     let currentIndex = 0;
     let stockIndex = 0;
@@ -373,18 +373,18 @@
       currentIndex = (currentIndex + 1) % images.length;
       hero.style.backgroundImage = `url(${images[currentIndex]})`;
 
-    }, 4000); // change every 4 seconds
+    }, 5000); // change every 5 seconds
     setInterval(() => {
 
       stockIndex = (stockIndex + 1) % stocks.length;
       thinBanner.style.backgroundImage = `url('${stocks[stockIndex]}')`;
-    }, 4000);
+    }, 5000);
 
   </script>
 
   <style>
     .hero {
-      height: 684px;
+      height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;

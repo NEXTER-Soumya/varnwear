@@ -226,14 +226,14 @@
 
     const hero = document.querySelector('.collection-slideshow');
     const images = [
-      '/assets/collections/image1.jpg',
-      '/assets/collections/image2.jpg',
-      '/assets/collections/image3.jpg',
-      '/assets/collections/image4.jpg',
-      '/assets/collections/image5.jpg',
-      '/assets/collections/image6.jpg',
-      '/assets/collections/image7.jpg',
-      '/assets/collections/image8.jpg'
+      '/assets/collections/image1.webp',
+      '/assets/collections/image2.webp',
+      '/assets/collections/image3.webp',
+      '/assets/collections/image4.webp',
+      '/assets/collections/image5.webp',
+      '/assets/collections/image6.webp',
+      '/assets/collections/image7.webp',
+      '/assets/collections/image8.webp'
     ];
     let currentIndex = 0;
     hero.style.backgroundImage = `url(${images[currentIndex]})`;
@@ -241,7 +241,7 @@
       currentIndex = (currentIndex + 1) % images.length;
       hero.style.backgroundImage = `url(${images[currentIndex]})`;
 
-    }, 4000);
+    }, 5000);
 
   </script>
 </body>
